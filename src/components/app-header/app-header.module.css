@@ -1,0 +1,16 @@
+header {
+  align-items: center;
+  display: flex;
+  height: 88px;
+  justify-content: space-around;
+}
+
+nav {
+  display: flex;
+}
+
+.nav_link {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+}

@@ -1,0 +1,15 @@
+.order_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.check_bg {
+    align-items: center;
+    background-image: url(../../images/order_accepted.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    height: 120px;
+    justify-content: center;
+    width: 120px;
+}

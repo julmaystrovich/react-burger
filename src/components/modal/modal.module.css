@@ -1,0 +1,15 @@
+.modal {
+    background-color: #1c1c21;
+    border-radius: 40px;
+    position: fixed;
+    top: calc(50% - 360px);
+    left: calc(50% - 360px);
+    width: 720px;
+    z-index: 100;
+}
+
+.modal_header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
