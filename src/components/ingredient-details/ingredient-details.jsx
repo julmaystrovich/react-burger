@@ -4,7 +4,6 @@ import { IngredientsPropTypes } from "../../utils/propTypes";
 
 function IngredientDetails({ ingredient, burger_data }) {
     const ingredient_item = burger_data.filter((item) => item._id === ingredient);
-    console.log(ingredient_item);
     return(
         <>
         {ingredient_item.map((item) => {

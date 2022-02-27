@@ -2,13 +2,12 @@ import React from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "./burger-ingredient";
-import Modal from "../modal/modal";
 
 function BurgerIngredients({ burger_data, action }) {
   const [current, setCurrent] = React.useState("buns");
 
   return (
-    <section className="mt-10">
+    <section className={styles.burger_section + " mt-10"}>
       <p className="text text_type_main-large pb-5">Соберите бургер</p>
       <div style={{ display: "flex" }}>
         <Tab value="buns" active={current === "buns"} onClick={setCurrent}>

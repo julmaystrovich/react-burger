@@ -10,7 +10,6 @@ import {
 function BurgerIngredient({ item, onClick }) {
   const handleClick = (e) => {
     onClick(e.currentTarget.id);
-    console.log(e.currentTarget.id);
 };
   return (
     <section

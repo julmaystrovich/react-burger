@@ -9,9 +9,6 @@ import {
 import BurgerConstructorItem from "./burger-constructor-item";
 
 function BurgerConstructor({ burger_data, action }) {
-  //    const totalSum = () => {
-  //     const bunPrice = (bun.price * 2)
-  //    };
 
   const burger_buns = burger_data.find((item) => {
     return item.type === "bun";
