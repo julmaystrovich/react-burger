@@ -19,6 +19,7 @@ function BurgerIngredient({ item, onClick }) {
     >
       <img
         src={item.image}
+        alt={item.name}
         className={styles.ingr_image + " mr-4 ml-4"}
       />
       <Counter count={1} size="default" />
