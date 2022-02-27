@@ -1,12 +1,13 @@
 import React from "react";
 import styles from './ingredient-details.module.css';
 import { IngredientsPropTypes } from "../../utils/propTypes";
+import PropTypes from "prop-types";
 
-function IngredientDetails({ ingredient, burger_data }) {
-    const ingredient_item = burger_data.filter((item) => item._id === ingredient);
+function IngredientDetails({ ingredient, burgerData }) {
+    const ingredientItem = burgerData.filter((item) => item._id === ingredient);
     return(
         <>
-        {ingredient_item.map((item) => {
+        {ingredientItem.map((item) => {
             return(
         <div className={styles.ingr_container + " pb-15"} key={item._id}>
             <img className={styles.image} src={item.image_large} />
@@ -36,7 +37,8 @@ function IngredientDetails({ ingredient, burger_data }) {
 }
 
 IngredientDetails.propTypes = {
-    burger_data: IngredientsPropTypes.isRequired,
+    burgerData: IngredientsPropTypes.isRequired,
+    ingredient: PropTypes.string.isRequired
 };
 
 export default IngredientDetails;

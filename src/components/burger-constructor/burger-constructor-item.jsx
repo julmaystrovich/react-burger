@@ -7,22 +7,21 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function BurgerConstructorItem({ burger_item }) {
+function BurgerConstructorItem({ burgerItem }) {
   return (
     <div className={styles.const_item + " pt-4 pr-1"}>
       <DragIcon type="primary" />
       <ConstructorElement
-        text={burger_item.name}
-        price={burger_item.price}
-        thumbnail={burger_item.image_mobile}
+        text={burgerItem.name}
+        price={burgerItem.price}
+        thumbnail={burgerItem.image_mobile}
       />
     </div>
   );
 }
 
 BurgerConstructorItem.propTypes = {
-  burger_item: ConstItemsPropTypes,
-  onClick: PropTypes.func,
+  burgerItem: ConstItemsPropTypes.isRequired,
 };
 
 export default BurgerConstructorItem;

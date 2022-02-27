@@ -12,6 +12,11 @@
   justify-content: center;
 }
 
+.ingr_section {
+  overflow: hidden;
+  position: relative;
+}
+
 .ingrs_list {
   display: grid;
   grid-template-columns: auto auto;
@@ -35,4 +40,8 @@
 .scroll_content::-webkit-scrollbar-thumb {
   background-color: #8585ad;
   color: #8585ad;
+}
+
+.tabs_section {
+  display: flex;
 }

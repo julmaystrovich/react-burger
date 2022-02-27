@@ -50,13 +50,13 @@ function App() {
     <div className="App">
       <AppHeader />
       <main className={styles.main_section}>
-        <BurgerIngredients burger_data={state.burgerData} action={handleOpenIngrModal} />
-        <BurgerConstructor burger_data={state.burgerData} action={handleOpenOrderModal} />
+        <BurgerIngredients burgerData={state.burgerData} action={handleOpenIngrModal} />
+        <BurgerConstructor burgerData={state.burgerData} action={handleOpenOrderModal} />
       </main>
       {state.isModalOpen &&
           <Modal onClose={handleCloseModal} header={state.isIngrModal ? "Детали ингредиента" : ""}>
             { state.isIngrModal
-              ? <IngredientDetails ingredient={currentIngredients} burger_data={state.burgerData} />
+              ? <IngredientDetails ingredient={currentIngredients} burgerData={state.burgerData} />
               : <OrderDetails />
             }
           </Modal>

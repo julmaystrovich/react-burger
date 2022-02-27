@@ -12,15 +12,13 @@ function BurgerIngredient({ item, onClick }) {
     onClick(e.currentTarget.id);
 };
   return (
-    <section
+    <article
       onClick={handleClick}
       className={styles.ingr_section}
-      style={{ overflow: "hidden", position: "relative" }}
       id={item._id}
     >
       <img
         src={item.image}
-        alt="image"
         className={styles.ingr_image + " mr-4 ml-4"}
       />
       <Counter count={1} size="default" />
@@ -29,7 +27,7 @@ function BurgerIngredient({ item, onClick }) {
         <CurrencyIcon type="primary" />
       </div>
       <p className="text text_type_main-default">{item.name}</p>
-    </section>
+    </article>
   );
 }
 

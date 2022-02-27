@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-//import { ingredientsPropTypes } from "../../utils/PropTypes";
+import { IngredientsPropTypes } from "../../utils/propTypes";
 import styles from "./burger-constructor.module.css";
 import {
   Button,
@@ -7,44 +7,43 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorItem from "./burger-constructor-item";
+import PropTypes from "prop-types";
 
-function BurgerConstructor({ burger_data, action }) {
+function BurgerConstructor({ burgerData, action }) {
 
-  const burger_buns = burger_data.find((item) => {
+  const burgerBuns = burgerData.find((item) => {
     return item.type === "bun";
   });
 
   return (
     <section className={styles.constr_section + " ml-10 pt-25"}>
       <div className={styles.constr_inside + " pr-4 pl-4"}>
-        {burger_buns && (
+        {burgerBuns && (
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={burger_buns.name + " (верх)"}
-            price={burger_buns.price}
-            thumbnail={burger_buns.image_mobile}
-            style={{ marginLeft: "32px", width: "100%" }}
+            text={burgerBuns.name + " (верх)"}
+            price={burgerBuns.price}
+            thumbnail={burgerBuns.image_mobile}
             className={styles.constr_inside + " pr-4 pl-4"}
           />
         )}
         <div className={styles.constr_scroll}>
-          {burger_data.map((item) => {
+          {burgerData.map((item) => {
             return (
               item.type != "bun" && (
-                <BurgerConstructorItem key={item._id} burger_item={item} />
+                <BurgerConstructorItem key={item._id} burgerItem={item} />
               )
             );
           })}
         </div>
-        {burger_buns && (
+        {burgerBuns && (
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={burger_buns.name + " (низ)"}
-            price={burger_buns.price}
-            thumbnail={burger_buns.image_mobile}
-            style={{ marginLeft: "32px" }}
+            text={burgerBuns.name + " (низ)"}
+            price={burgerBuns.price}
+            thumbnail={burgerBuns.image_mobile}
           />
         )}
       </div>
@@ -60,5 +59,10 @@ function BurgerConstructor({ burger_data, action }) {
     </section>
   );
 }
+
+BurgerConstructor.propTypes = {
+  burgerData: IngredientsPropTypes.isRequired,
+  action: PropTypes.func.isRequired
+};
 
 export default BurgerConstructor;
