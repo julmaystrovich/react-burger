@@ -7,9 +7,9 @@ function IngredientDetails({ ingredient, burgerData }) {
     const ingredientItem = burgerData.filter((item) => item._id === ingredient);
     return(
         <>
-        {ingredientItem.map((item) => {
+        {ingredientItem.map((item, index) => {
             return(
-        <div className={styles.ingr_container + " pb-15"} key={item._id}>
+        <div className={styles.ingr_container + " pb-15"} key={index}>
             <img className={styles.image} src={item.image_large} alt={item.name} />
             <p className="text_type_main-medium mb-8 mt-4">{item.name}</p>
             <ul className={styles.list}>

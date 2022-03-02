@@ -29,10 +29,10 @@ function BurgerConstructor({ burgerData, action }) {
           />
         )}
         <div className={styles.constr_scroll}>
-          {burgerData.map((item) => {
+          {burgerData.map((item, index) => {
             return (
               item.type != "bun" && (
-                <BurgerConstructorItem key={item._id} burgerItem={item} />
+                <BurgerConstructorItem key={index} burgerItem={item} />
               )
             );
           })}
