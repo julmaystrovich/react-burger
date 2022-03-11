@@ -7,56 +7,54 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-detail';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { getBurgerData } from '../../utils/connectAPI';
+import { BurgerIngredientsContext } from "../../utils/ingredientsContext";
 
 function App() {
-  const apiUrl = "https://norma.nomoreparties.space/api/ingredients";
-  const [state, setState] = React.useState({
-    burgerData: [],
-    isModalOpen: false,
-    isOrderModal: false,
-    isIngrModal: false
-  });
   const [currentIngredients, setCurrentIngredients] = useState("");
-
+  const [burgerData, setBurgerData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOrderModal, setIsOrderModal] = useState(false);
+  const [isIngrModal, setIsIngrModal] = useState(false);
 
   React.useEffect(() => {
-    fetch(apiUrl)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-      } else {
-          return Promise.reject("Error: " + res.status);
-      }})
-      .then((res) => {
-        setState({...state, burgerData: res.data });
-      })
-      .catch((err) => console.log(err));
-  }, [])
+    getBurgerData()
+    .then((res) => {
+      setBurgerData(res.data);
+    })
+    .catch((err) => console.log(err));
+}, [])
 
   function handleCloseModal() {
-    setState({ ...state, isModalOpen: false, isIngrModal: false, isOrderModal: false });
+    setIsModalOpen(false);
+    setIsOrderModal(false);
+    setIsIngrModal(false);
   };
 
   function handleOpenIngrModal(id) {
-    setState({ ...state, isModalOpen: true, isIngrModal: true });
+    setIsModalOpen(true);
+    setIsIngrModal(true);
     setCurrentIngredients(id);
   };
 
   function handleOpenOrderModal() {
-    setState({ ...state, isModalOpen: true, isOrderModal: true });
+    setIsModalOpen(true);
+    setIsOrderModal(true);
   };
 
   return (
     <div className="App">
       <AppHeader />
+      <BurgerIngredientsContext.Provider value={{burgerData}}>
       <main className={styles.main_section}>
-        <BurgerIngredients burgerData={state.burgerData} action={handleOpenIngrModal} />
-        <BurgerConstructor burgerData={state.burgerData} action={handleOpenOrderModal} />
+        <BurgerIngredients burgerData={burgerData} action={handleOpenIngrModal} />
+        <BurgerConstructor burgerData={burgerData} action={handleOpenOrderModal} />
       </main>
-      {state.isModalOpen &&
-          <Modal onClose={handleCloseModal} header={state.isIngrModal ? "Детали ингредиента" : ""}>
-            { state.isIngrModal
-              ? <IngredientDetails ingredient={currentIngredients} burgerData={state.burgerData} />
+      </BurgerIngredientsContext.Provider>
+      {isModalOpen &&
+          <Modal onClose={handleCloseModal} header={isIngrModal ? "Детали ингредиента" : ""}>
+            {isIngrModal
+              ? <IngredientDetails ingredient={currentIngredients} burgerData={burgerData} />
               : <OrderDetails />
             }
           </Modal>

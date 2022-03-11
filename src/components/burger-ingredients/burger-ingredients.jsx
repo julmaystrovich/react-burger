@@ -4,10 +4,11 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "./burger-ingredient";
 import PropTypes from "prop-types";
 import { IngredientsPropTypes } from "../../utils/propTypes";
+import { BurgerIngredientsContext } from "../../utils/ingredientsContext";
 
-function BurgerIngredients({ burgerData, action }) {
+function BurgerIngredients({ action }) {
   const [current, setCurrent] = React.useState("buns");
-
+  const { burgerData } = React.useContext(BurgerIngredientsContext);
   const onClickTab = (value) => {
     setCurrent(value);
     const el = document.getElementById(value);

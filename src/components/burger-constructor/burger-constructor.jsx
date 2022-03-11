@@ -8,9 +8,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorItem from "./burger-constructor-item";
 import PropTypes from "prop-types";
+import { BurgerIngredientsContext } from "../../utils/ingredientsContext";
 
-function BurgerConstructor({ burgerData, action }) {
-
+function BurgerConstructor({ action }) {
+  const { burgerData } = React.useContext(BurgerIngredientsContext);
   const burgerBuns = burgerData.find((item) => {
     return item.type === "bun";
   });
