@@ -1,8 +1,9 @@
-const apiUrl = "https://norma.nomoreparties.space/api";
+import { apiUrl } from "./const.js";
 
 function checkResponse(res) {
     if (res.ok) {
-        return res.json();
+       return res.json();
+       
     } else {
         return Promise.reject("Error: " + res.status);
     }

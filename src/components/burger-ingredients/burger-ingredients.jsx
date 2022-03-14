@@ -2,17 +2,39 @@ import React, { useMemo } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "./burger-ingredient";
-import PropTypes from "prop-types";
-import { IngredientsPropTypes } from "../../utils/propTypes";
-import { BurgerIngredientsContext } from "../../utils/ingredientsContext";
+import { useSelector } from "react-redux";
 
-function BurgerIngredients({ action }) {
+function BurgerIngredients() {
+  const { burgerData } = useSelector((store) => store.burgerData);
   const [current, setCurrent] = React.useState("buns");
-  const { burgerData } = React.useContext(BurgerIngredientsContext);
+  const bunRef = React.useRef();
+  const sauceRef = React.useRef();
+  const fillingRef = React.useRef();
   const onClickTab = (value) => {
     setCurrent(value);
     const el = document.getElementById(value);
-    if (el) el.scrollIntoView({behavior: "smooth"});
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const onScrollTab = (e) => {
+    const bunSpace = bunRef.current.getBoundingClientRect().top;
+    const sauceSpace = sauceRef.current.getBoundingClientRect().top;
+    const fillingSpace = fillingRef.current.getBoundingClientRect().top;
+    const top = e.target.getBoundingClientRect().top;
+
+    const offset = {
+      buns: Math.abs(bunSpace - top),
+      filling: Math.abs(fillingSpace - top),
+      sauce: Math.abs(sauceSpace - top),
+    };
+
+    const activeTabs = Object.keys(offset).reduce((prev, current) =>
+      offset[prev] < offset[current] ? prev : current
+    );
+
+    if (current !== activeTabs) {
+      setCurrent(activeTabs);
+    }
   };
 
   const burgerBuns = useMemo(
@@ -20,7 +42,7 @@ function BurgerIngredients({ action }) {
     [burgerData]
   );
 
-  const burgerSause = useMemo(
+  const burgerSauce = useMemo(
     () => burgerData.filter((item) => item.type === "sauce"),
     [burgerData]
   );
@@ -48,39 +70,42 @@ function BurgerIngredients({ action }) {
           Начинки
         </Tab>
       </div>
-      <div className={styles.scroll_content + " mt-10"}>
-        <p className="text text_type_main-medium" id="buns">Булки</p>
+      <div className={styles.scroll_content + " mt-10"} onScroll={onScrollTab}>
+        <p className="text text_type_main-medium" id="buns" ref={bunRef}>
+          Булки
+        </p>
         <div className={styles.ingrs_list + " pt-6 pr-4 pl-4"}>
-          {burgerBuns.map((item, index) => {
-            return (
-                <BurgerIngredient key={index} item={item} onClick={action} />
-            );
+          {burgerBuns.map((item) => {
+            return <BurgerIngredient key={item._id} item={item} />;
           })}
         </div>
-        <p className="text text_type_main-medium pt-10" id="sauce">Соусы</p>
+        <p
+          className="text text_type_main-medium pt-10"
+          id="sauce"
+          ref={sauceRef}
+        >
+          Соусы
+        </p>
         <div className={styles.ingrs_list + " pt-6 pr-4 pl-4"}>
-          {burgerSause.map((item, index) => {
-            return (
-                <BurgerIngredient key={index} item={item} onClick={action} />
-            );
+          {burgerSauce.map((item) => {
+            return <BurgerIngredient key={item._id} item={item} />;
           })}
         </div>
-        <p className="text text_type_main-medium pt-10" id="filling">Начинки</p>
+        <p
+          className="text text_type_main-medium pt-10"
+          id="filling"
+          ref={fillingRef}
+        >
+          Начинки
+        </p>
         <div className={styles.ingrs_list + " pt-6 pr-4 pl-4"}>
-          {burgerMain.map((item, index) => {
-            return (
-                <BurgerIngredient key={index} item={item} onClick={action} />
-            );
+          {burgerMain.map((item) => {
+            return <BurgerIngredient key={item._id} item={item} />;
           })}
         </div>
       </div>
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  burgerData: IngredientsPropTypes.isRequired,
-  action: PropTypes.func.isRequired,
-};
 
 export default BurgerIngredients;
