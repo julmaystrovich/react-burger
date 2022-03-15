@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { IngredientsPropTypes } from "../../utils/propTypes";
+import React, { useCallback } from "react";
 import styles from "./burger-constructor.module.css";
 import {
   Button,
@@ -7,17 +6,68 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorItem from "./burger-constructor-item";
-import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+import {
+  addIngredient,
+  removeIngredient,
+  moveIngredient,
+} from "../../services/actions/constructor";
+import { useDrop } from "react-dnd";
+import { getOrderNumber } from "../../services/actions/order";
 
-function BurgerConstructor({ burgerData, action }) {
+function BurgerConstructor() {
+  const dispatch = useDispatch();
+  const { burgerConstructor } = useSelector((store) => store.constructor);
+  const { orderRequest } = useSelector((store) => store.order);
+  const burgerBuns = burgerConstructor?.find(
+    (ingredient) => ingredient.type === "bun"
+  );
+  const burgerFill = burgerConstructor?.filter(
+    (ingredient) => ingredient.type !== "bun"
+  );
 
-  const burgerBuns = burgerData.find((item) => {
-    return item.type === "bun";
+  const getOrderNumberPopup = React.useCallback(() => {
+    const burgerIngredients = burgerConstructor.map((item) => item._id);
+    dispatch(getOrderNumber(burgerIngredients));
+  }, [dispatch, burgerConstructor]);
+
+  const orderPrice = React.useMemo(
+    () =>
+      burgerConstructor
+        ? burgerConstructor.reduce((sum, current) => sum + current.price, 0)
+        : 0,
+    [burgerConstructor]
+  );
+
+  const handleDrop = (item) => {
+    const uuid = uuidv4();
+    if (item.type === "bun" && burgerBuns) {
+      dispatch(removeIngredient(burgerBuns.uuid));
+    }
+    dispatch(addIngredient(item, uuid));
+  };
+
+  const handleMove = useCallback((dragIndex, hoverIndex) => {
+    dispatch(moveIngredient(dragIndex, hoverIndex));
   });
+
+  const [, dropTarget] = useDrop({
+    accept: "ingredients",
+    drop: (ingredient) => {
+      handleDrop(ingredient);
+    },
+  });
+
+  const handleRemove = (uuid) => {
+    dispatch(removeIngredient(uuid));
+  };
+
+  const isDisabled = !burgerConstructor?.length || orderRequest || !burgerBuns;
 
   return (
     <section className={styles.constr_section + " ml-10 pt-25"}>
-      <div className={styles.constr_inside + " pr-4 pl-4"}>
+      <div className={styles.constr_inside + " pr-4 pl-4"} ref={dropTarget}>
         {burgerBuns && (
           <ConstructorElement
             type="top"
@@ -29,13 +79,18 @@ function BurgerConstructor({ burgerData, action }) {
           />
         )}
         <div className={styles.constr_scroll}>
-          {burgerData.map((item) => {
-            return (
-              item.type != "bun" && (
-                <BurgerConstructorItem key={item._id} burgerItem={item} />
-              )
-            );
-          })}
+          {burgerFill &&
+            burgerFill.map((item, index) => {
+              return (
+                <BurgerConstructorItem
+                  key={item.uuid}
+                  burgerItem={item}
+                  index={index}
+                  onDelete={handleRemove}
+                  onMove={handleMove}
+                />
+              );
+            })}
         </div>
         {burgerBuns && (
           <ConstructorElement
@@ -49,20 +104,15 @@ function BurgerConstructor({ burgerData, action }) {
       </div>
       <div className={styles.total_area + " mt-10 mr-4"}>
         <div className={styles.total_inside + " mr-10"}>
-          <p className="text text_type_digits-medium mr-2">12345</p>
+          <p className="text text_type_digits-medium mr-2">{orderPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="medium" onClick={action}> 
+        <Button type="primary" size="medium" onClick={getOrderNumberPopup} disabled={isDisabled}>
           Оформить заказ
         </Button>
       </div>
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  burgerData: IngredientsPropTypes.isRequired,
-  action: PropTypes.func.isRequired
-};
 
 export default BurgerConstructor;
