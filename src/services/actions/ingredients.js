@@ -14,7 +14,6 @@ export function getBurgerIngredients() {
     });
     getBurgerData()
       .then((res) => {
-        
         dispatch({
           type: GET_BURGER_INGREDIENTS_SUCCESS,
           data: res.data
@@ -29,18 +28,14 @@ export function getBurgerIngredients() {
 }
 
 export function openIngredientModal(currentIngredient) {
-  return function (dispatch) {
-    dispatch({
+  return {
       type: OPEN_INGREDIENTS_DETAILS,
       currentIngredient
-    });
-  }
+  };
 }
 
 export function closeIngredientModal() {
-  return function (dispatch) {
-    dispatch({
+  return {
       type: CLOSE_INGREDIENTS_DETAILS
-    });
-  }
+  };
 }

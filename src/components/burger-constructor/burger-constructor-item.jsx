@@ -7,11 +7,9 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrop, useDrag } from "react-dnd";
-import { useDispatch } from "react-redux";
 
 function BurgerConstructorItem({ burgerItem, onDelete, index, onMove }) {
   const ref = React.useRef(null);
-  const dispatch = useDispatch();
   const [, dragRef] = useDrag({
     type: "constructor",
     item: () => {

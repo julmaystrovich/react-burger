@@ -1,15 +1,8 @@
 import { apiUrl } from "./const.js";
-
-function checkResponse(res) {
-    if (res.ok) {
-       return res.json();
-       
-    } else {
-        return Promise.reject("Error: " + res.status);
-    }
-}
+import { checkResponse } from "./utils.js";
 
 export const getBurgerData = () => {
     return fetch(apiUrl + "/ingredients")
-    .then((res) => checkResponse(res));
+    .then((res) => checkResponse(res))
+    .catch((err) => console.log(err));
 }

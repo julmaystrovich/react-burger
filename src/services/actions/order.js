@@ -1,4 +1,5 @@
 import { postOrder } from '../../utils/postOrder';
+import { CLEAR_CONSTRUCTOR } from './constructor';
 
 export const CLOSE_ORDER_DETAILS = 'CLOSE_ORDER_DETAILS';
 export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
@@ -10,25 +11,26 @@ export function getOrderNumber(data) {
         dispatch({
             type: GET_ORDER_NUMBER_REQUEST
         });
-        postOrder(data).then(res => {
-            if (res && res.success) {
-                dispatch({
-                    type: GET_ORDER_NUMBER_SUCCESS,
-                    orderNumber: res.order.number
-                });
-            } else {
-                dispatch({
-                    type: GET_ORDER_NUMBER_FAILED
-                });
-            }
-        });
+        postOrder(data)
+        .then((res) => {
+            dispatch({
+                type: GET_ORDER_NUMBER_SUCCESS,
+                orderNumber: res.order.number
+            });
+            dispatch({
+                type: CLEAR_CONSTRUCTOR
+            });
+          })
+        .catch((err) => {
+            dispatch({
+              type: GET_ORDER_NUMBER_FAILED
+            });
+          });
     };
 }
 
 export function closeOrderModal() {
-    return function (dispatch) {
-        dispatch({
-            type: CLOSE_ORDER_DETAILS
-        });
-    }
+    return {
+        type: CLOSE_ORDER_DETAILS
+    };
 }

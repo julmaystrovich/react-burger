@@ -6,7 +6,6 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorItem from "./burger-constructor-item";
-import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import {

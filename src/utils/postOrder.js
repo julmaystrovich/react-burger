@@ -1,12 +1,5 @@
 import { apiUrl } from "./const.js";
-
-function checkResponse(res) {
-    if (res.ok) {
-        return res.json();
-    } else {
-        return Promise.reject("Error: " + res.status);
-    }
-}
+import { checkResponse } from "./utils.js";
 
 export const postOrder = (data) => {
     return fetch(apiUrl + "/orders", {
@@ -16,5 +9,6 @@ export const postOrder = (data) => {
         },
         body: JSON.stringify({ ingredients: data }),
     })
-    .then((res) => checkResponse(res));
+    .then((res) => checkResponse(res))
+    .catch((err) => console.log(err));
 }

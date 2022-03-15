@@ -1,7 +1,8 @@
 import {
     ADD_CONSTRUCTOR_INGREDIENTS,
     REMOVE_CONSTRUCTOR_INGREDIENTS,
-    MOVE_CONSTRUCTOR_INGREDIENTS
+    MOVE_CONSTRUCTOR_INGREDIENTS,
+    CLEAR_CONSTRUCTOR
 } from '../actions/constructor';
 
 const constructorInitialState = {
@@ -35,6 +36,9 @@ const constructorReducer = (state = constructorInitialState, action) => {
                 ...state,
                 burgerConstructor: [...burgerBun, ...newBurgerFilling],
             };
+        }
+        case CLEAR_CONSTRUCTOR: {
+            return { ...state, burgerConstructor: [] };
         }
         default: {
             return state;
