@@ -3,18 +3,23 @@ import { checkResponse } from "./utils.js";
 import { getCookie } from "./cookie.js";
 
 export const getBurgerData = () => {
-    return fetch(apiUrl + "/ingredients")
+    return fetch(apiUrl + "/ingredients", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
     .then((res) => checkResponse(res))
     .catch((err) => console.log(err));
 }
 
-export const registerRequest = (form) => {
+export const registerRequest = (email, password, name) => {
     return fetch(apiUrl + "/auth/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ form }),
+        body: JSON.stringify({ email, password, name }),
     })
     .then((res) => checkResponse(res))
     .catch((err) => console.log(err));
@@ -48,7 +53,8 @@ export const updateTokenRequest = () => {
     return fetch(apiUrl + "/auth/token", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: getCookie('token'),
         },
         body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
     })
@@ -61,7 +67,7 @@ export const updateTokenRequest = () => {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            Authorization: 'Bearer ' + getCookie('token')
+            Authorization: getCookie('token'),
         },
     })
     .then((res) => checkResponse(res))

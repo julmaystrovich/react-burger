@@ -13,15 +13,17 @@ export function ResetPasswordPage() {
   const dispatch = useDispatch();
   const { state } = useLocation();
   const history = useHistory();
-  const { loggedIn, resetPasswordFailed } = useSelector((store) => store.auth);
+  const { loggedIn, resetPasswordFailed, resetPasswordSuccess } = useSelector((store) => store.auth);
   const [form, setValue] = useState({ password: "", token: "" });
   const prevPathname = history.location.state?.prevPathname;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(resetPassword(form));
+    dispatch(resetPassword(form.password, form.token));
     if (!resetPasswordFailed) {
-      history.replace({ pathname: "/login" });
+      window.setTimeout(() => {
+        history.push({ pathname: '/login' });
+     }, 5000)
     }
   };
 
@@ -38,7 +40,6 @@ export function ResetPasswordPage() {
         <Redirect to={'/login'} />
     );
 }
-
   return (
     <main className={styles.page}>
       <p className="text text_type_main-medium pb-6">Восстановление пароля</p>
@@ -61,6 +62,7 @@ export function ResetPasswordPage() {
           Сохранить
         </Button>
       </form>
+      {resetPasswordSuccess && <p className="text text_type_main-default mt-10">Пароль успешно изменен. Перенаправляем на страницу входа...</p>}
       <p className="text text_type_main-default text_color_inactive mt-20">
         Вспомнили пароль?{" "}
         <Link

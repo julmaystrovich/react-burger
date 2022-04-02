@@ -14,10 +14,9 @@ export function LoginPage() {
   const { state } = useLocation();
   const { loggedIn } = useSelector((store) => store.auth);
   const [form, setValue] = useState({ email: "", password: "" });
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(logIn(form));
+    dispatch(logIn(form.email, form.password));
   };
 
   const handleChange = (e) => {

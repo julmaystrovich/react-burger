@@ -41,6 +41,7 @@ import {
         updateUserFailed: false,
         resetPasswordRequest: false,
         resetPasswordFailed: false,
+        resetPasswordSuccess: false,
         forgotPasswordRequest: false,
         forgotPasswordFailed: false,
     };
@@ -102,13 +103,13 @@ import {
                 return { ...state, updateUserRequest: false, updateUserFailed: true };
             }
             case RESET_REQUEST: {
-                return { ...state, resetPasswordRequest: true, resetPasswordFailed: false };
+                return { ...state, resetPasswordRequest: true, resetPasswordFailed: false, resetPasswordSuccess: true };
             }
             case RESET_SUCCESS: {
-                return { ...state, user: action.user, resetPasswordRequest: false };
+                return { ...state, user: action.user, resetPasswordRequest: false, resetPasswordSuccess: true };
             }
             case RESET_FAILED: {
-                return { ...state, resetPasswordRequest: false, resetPasswordFailed: true };
+                return { ...state, resetPasswordRequest: false, resetPasswordFailed: true, resetPasswordSuccess: true };
             }
             case FORGOT_REQUEST: {
                 return { ...state, forgotPasswordRequest: true, forgotPasswordFailed: false };

@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Link, useLocation, Redirect, NavLink } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Input,
@@ -8,7 +8,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../../styles/pages.module.css";
-import { logOut , updateUser} from "../../services/actions/authorization";
+import { logOut, updateUser } from "../../services/actions/authorization";
 
 export function ProfilePage() {
   const dispatch = useDispatch();
@@ -18,30 +18,28 @@ export function ProfilePage() {
   const location = useLocation();
   const [isChanged, setIsChanged] = useState(false);
 
-  // const setValues = () => {
-  //   setValue({ email: user.email, password: "", name: user.name });
-  // };
+  const setValues = () => {
+    setValue({ email: user.email, password: "", name: user.name });
+  };
 
-  // useEffect(() => {
-  //   setValues();
-  // }, []);
+  useEffect(() => {
+    setValues();
+  }, []);
 
-  // useEffect(() => {
-  //   setIsChanged(
-  //     form.email !== user.email ||
-  //       form.name !== user.name ||
-  //       form.password
-  //   );
-  // }, [user, form]);
+  useEffect(() => {
+    setIsChanged(
+      form.email !== user.email || form.name !== user.name || form.password
+    );
+  }, [user, form]);
 
-  // const onCancelClick = (e) => {
-  //     e.preventDefault();
-  //     setValues();
-  //   };
+  const onCancel = (e) => {
+    e.preventDefault();
+    setValues();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUser(form));
+    dispatch(updateUser(form.email, form.name));
   };
   const handleLogout = (e) => {
     e.preventDefault();
@@ -113,6 +111,20 @@ export function ProfilePage() {
           value={form.password}
           name={"password"}
         />
+        {isChanged && (
+          <div className={styles.profile_buttons + " mt-6"}>
+            <Button
+              type="secondary"
+              size="medium"
+              onClick={onCancel}
+            >
+              Отменить
+            </Button>
+            <Button type="primary" size="medium">
+              Сохранить
+            </Button>
+          </div>
+        )}
       </form>
     </main>
   );

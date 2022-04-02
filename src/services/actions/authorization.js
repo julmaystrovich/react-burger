@@ -33,12 +33,12 @@ export const FORGOT_REQUEST = 'FORGOT_REQUEST';
 export const FORGOT_SUCCESS = 'FORGOT_SUCCESS';
 export const FORGOT_FAILED = 'FORGOT_FAILED';
 
-export function logIn(form) {
+export function logIn(email, password) {
     return function(dispatch) {
         dispatch({
             type: LOGIN_REQUEST
         });
-        loginRequest(form)
+        loginRequest(email, password)
         .then((res) => {
             if (res.success) {
                 setCookie('token', res.accessToken);
@@ -82,12 +82,12 @@ export function logOut() {
     }
 }
 
-export function register(form) {
+export function register(email, password, name) {
     return function(dispatch) {
         dispatch({
             type: REGISTRATION_REQUEST
         });
-        registerRequest(form)
+        registerRequest(email, password, name)
         .then((res) => {
             if (res.success) {
                 setCookie('token', res.accessToken);
@@ -131,12 +131,12 @@ export function updateToken() {
     }
 }
 
-export function resetPassword(form) {
+export function resetPassword(password, token) {
     return function(dispatch) {
         dispatch({
             type: RESET_REQUEST
         });
-        resetPasswordRequest(form)
+        resetPasswordRequest(password, token)
         .then((res) => {
             if (res.success) {
                 dispatch({
@@ -153,12 +153,12 @@ export function resetPassword(form) {
     }
 }
 
-export function forgotPassword(form) {
+export function forgotPassword(email) {
     return function(dispatch) {
         dispatch({
             type: FORGOT_REQUEST
         });
-        forgotPasswordRequest(form)
+        forgotPasswordRequest(email)
         .then((res) => {
             if (res.success) {
                 dispatch({
@@ -203,12 +203,12 @@ export function getUser() {
     }
 }
 
-export function updateUser(form) {
+export function updateUser(email, name) {
     return function(dispatch) {
         dispatch({
             type: UPDATE_USER_REQUEST
         });
-        updateUserRequest(form)
+        updateUserRequest(email, name)
         .then((res) => {
             if (res.success) {
                 dispatch({
@@ -221,7 +221,7 @@ export function updateUser(form) {
             console.log(err);
             if (localStorage.getItem('refreshToken')) {
                 dispatch(updateToken());
-                dispatch(updateUser(form));
+                dispatch(updateUser(email, name));
             } else {
                 dispatch({
                     type: UPDATE_USER_FAILED

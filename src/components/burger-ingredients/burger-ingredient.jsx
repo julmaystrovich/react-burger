@@ -9,12 +9,14 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { openIngredientModal } from "../../services/actions/ingredients";
 import { useDrag } from "react-dnd";
+import { useLocation, Link } from "react-router-dom";
 
 function BurgerIngredient({ item }) {
   const dispatch = useDispatch();
   const { burgerData } = useSelector((store) => store.burgerData);
   const { burgerConstructor } = useSelector((store) => store.constructor);
   const count = burgerConstructor?.filter((it) => it._id === item._id).length;
+  const location = useLocation();
 
   const handleClick = (e) => {
     const currentData = burgerData.find(
@@ -31,25 +33,36 @@ function BurgerIngredient({ item }) {
     }),
   });
 
+  const ingredientId = item['_id'];
+
   return (
-    <article
-      className={styles.ingr_section}
-      id={item._id}
-      onClick={handleClick}
-      ref={dragRef}
+    <Link
+      key={item._id}
+      to={{
+        pathname: `/ingredients/${ingredientId}`,
+        state: { background: location },
+      }}
+      className={styles.nodec_link}
     >
-      <img
-        src={item.image}
-        alt={item.name}
-        className={styles.ingr_image + " mr-4 ml-4"}
-      />
-      {count > 0 && <Counter count={count} size="default" />}
-      <div className={styles.ingr_price + " mt-1 mb-1"}>
-        <p className="text text_type_digits-default mr-2">{item.price}</p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p className="text text_type_main-default">{item.name}</p>
-    </article>
+      <article
+        className={styles.ingr_section}
+        id={item._id}
+        onClick={handleClick}
+        ref={dragRef}
+      >
+        <img
+          src={item.image}
+          alt={item.name}
+          className={styles.ingr_image + " mr-4 ml-4"}
+        />
+        {count > 0 && <Counter count={count} size="default" />}
+        <div className={styles.ingr_price + " mt-1 mb-1"}>
+          <p className="text text_type_digits-default mr-2">{item.price}</p>
+          <CurrencyIcon type="primary" />
+        </div>
+        <p className="text text_type_main-default">{item.name}</p>
+      </article>
+    </Link>
   );
 }
 

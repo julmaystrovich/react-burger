@@ -18,7 +18,8 @@ export function RegisterPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(register(form));
+    dispatch(register(form.email, form.password, form.name));
+    console.log(form.email, form.password, form.name);
   };
 
   const handleChange = (e) => {
@@ -41,12 +42,7 @@ export function RegisterPage() {
           error={false}
           size={"default"}
         />
-        <EmailInput
-          onChange={handleChange}
-          value={form.email}
-          name={"email"}
-          size={"default"}
-        />
+        <EmailInput onChange={handleChange} value={form.email} name={'email'} />
         <PasswordInput
           onChange={handleChange}
           value={form.password}

@@ -18,8 +18,8 @@ export function ForgotPasswordPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(forgotPassword(form));
-    history.replace({ pathname: '/reset-password' });
+    dispatch(forgotPassword(form.email));
+    history.push({ pathname: '/reset-password', state: { prevPathname: history.location.pathname } });
   };
 
   const handleChange = (e) => {
@@ -27,7 +27,7 @@ export function ForgotPasswordPage() {
   };
 
   if (loggedIn) {
-    return <Redirect to={"/"} />;
+    <Redirect to={{ pathname: '/' }} />
   }
 
   return (
