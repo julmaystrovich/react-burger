@@ -15,11 +15,14 @@ import {
 } from "../../services/actions/constructor";
 import { useDrop } from "react-dnd";
 import { getOrderNumber } from "../../services/actions/order";
+import { useHistory } from 'react-router-dom';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const { burgerConstructor } = useSelector((store) => store.constructor);
   const { orderRequest } = useSelector((store) => store.order);
+  const history = useHistory();
+  const { loggedIn } = useSelector(store => store.auth);
   const burgerBuns = burgerConstructor?.find(
     (ingredient) => ingredient.type === "bun"
   );
@@ -28,9 +31,13 @@ function BurgerConstructor() {
   );
 
   const getOrderNumberPopup = React.useCallback(() => {
-    const burgerIngredients = burgerConstructor.map((item) => item._id);
-    dispatch(getOrderNumber(burgerIngredients));
-  }, [dispatch, burgerConstructor]);
+    if (loggedIn) {
+      const burgerIngredients = burgerConstructor.map(((item) => item._id));
+      dispatch(getOrderNumber(burgerIngredients));
+  } else {
+      history.push("/login");
+  }
+}, [dispatch, burgerConstructor, history, loggedIn]);
 
   const orderPrice = React.useMemo(
     () =>

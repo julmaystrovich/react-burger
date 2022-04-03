@@ -11,6 +11,17 @@ nav {
 
 .nav_link {
   align-items: center;
+  color: #8585AD;
   cursor: pointer;
   display: flex;
+  text-decoration: none;
 }
+
+.nav_link_active {
+  align-items: center;
+  color: #F2F2F3;
+  cursor: pointer;
+  display: flex;
+  text-decoration: none;
+}
+

@@ -45,3 +45,8 @@
 .tabs_section {
   display: flex;
 }
+
+.nodec_link {
+  color: #fff;
+  text-decoration: none;
+}
