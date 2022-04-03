@@ -2,7 +2,6 @@ import { React, useState } from "react";
 import { Link, useLocation, Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Input,
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -27,7 +26,7 @@ export function ForgotPasswordPage() {
   };
 
   if (loggedIn) {
-    <Redirect to={{ pathname: '/' }} />
+    return <Redirect to={state?.from || "/"} />;
   }
 
   return (
