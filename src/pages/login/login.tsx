@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React, { useState, FC } from "react";
 import { Link, useLocation, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,18 +8,19 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../../styles/pages.module.css";
 import { logIn } from "../../services/actions/authorization";
+import { TLocation, TForm } from "../../utils/types";
 
-export function LoginPage() {
+export const LoginPage: FC = () => {
   const dispatch = useDispatch();
-  const { state } = useLocation();
-  const { loggedIn } = useSelector((store) => store.auth);
-  const [form, setValue] = useState({ email: "", password: "" });
-  const handleSubmit = (e) => {
+  const { state } = useLocation<TLocation>();
+  const { loggedIn } = useSelector((store: any) => store.auth);
+  const [form, setValue] = useState<TForm>({ email: "", password: "" });
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(logIn(form.email, form.password));
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -33,13 +34,13 @@ export function LoginPage() {
       <form onSubmit={handleSubmit} className={styles.container}>
         <EmailInput
           onChange={handleChange}
-          value={form.email}
+          value={`${form.email}`}
           name={"email"}
           size={"default"}
         />
         <PasswordInput
           onChange={handleChange}
-          value={form.password}
+          value={`${form.password}`}
           name={"password"}
         />
         <Button type="primary" size="medium">

@@ -1,15 +1,15 @@
-import React from "react";
+import React, { FC } from "react";
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./modal.module.css";
+import { TModal } from "../../utils/types";
 
-const modalRoot = document.getElementById("react-modals");
+const modalRoot = document.getElementById("react-modals") as HTMLElement;
 
-function Modal({ children, header, onClose }) {
+const Modal: FC<TModal> = ({ children, header, onClose }) => {
   React.useEffect(() => {
-    const closeModal = (e) => {
+    const closeModal = (e: { key: string; keyCode: number; }) => {
       if (e.key === "Escape" || e.keyCode === 27) {
         onClose();
       }
@@ -27,7 +27,7 @@ function Modal({ children, header, onClose }) {
           <p className="text text_type_main-large">
             {header}
           </p>
-          <CloseIcon onClick={onClose} />
+          <CloseIcon onClick={onClose} type="primary" />
         </div>
         {children}
       </div>
@@ -36,11 +36,5 @@ function Modal({ children, header, onClose }) {
     modalRoot
   );
 }
-
-Modal.propTypes = {
-  children: PropTypes.element.isRequired,
-  onClose: PropTypes.func.isRequired,
-  header: PropTypes.string,
-};
 
 export default Modal;

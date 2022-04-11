@@ -1,7 +1,8 @@
-import { apiUrl } from "./const.js";
-import { checkResponse } from "./utils.js";
+import { apiUrl } from "./const";
+import { checkResponse } from "./utils";
+import { TIngredientId } from "./types";
 
-export const postOrder = (data) => {
+export const postOrder = (data: Array<TIngredientId>) => {
     return fetch(apiUrl + "/orders", {
         method: "POST",
         headers: {

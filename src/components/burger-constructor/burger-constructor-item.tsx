@@ -1,6 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { ConstItemsPropTypes } from "../../utils/propTypes";
+import React, { FC } from 'react';
+import { TBurgerConstructorComponent, TIngredient } from "../../utils/types";
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
@@ -8,8 +7,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrop, useDrag } from "react-dnd";
 
-function BurgerConstructorItem({ burgerItem, onDelete, index, onMove }) {
-  const ref = React.useRef(null);
+const BurgerConstructorItem: FC<TBurgerConstructorComponent> = ({ burgerItem, onDelete, index, onMove }) => {
+  const ref = React.useRef<HTMLDivElement>(null);
   const [, dragRef] = useDrag({
     type: "constructor",
     item: () => {
@@ -24,7 +23,7 @@ function BurgerConstructorItem({ burgerItem, onDelete, index, onMove }) {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: any, monitor) {
       if (!ref.current) {
         return;
       }
@@ -42,7 +41,7 @@ function BurgerConstructorItem({ burgerItem, onDelete, index, onMove }) {
 
       const clientOffset = monitor.getClientOffset();
 
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = (clientOffset?.y ?? 0) - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -73,12 +72,5 @@ function BurgerConstructorItem({ burgerItem, onDelete, index, onMove }) {
     </div>
   );
 }
-
-BurgerConstructorItem.propTypes = {
-  burgerItem: ConstItemsPropTypes.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  onMove: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructorItem;

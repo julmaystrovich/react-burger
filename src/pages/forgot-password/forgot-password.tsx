@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React, { useState, FC } from "react";
 import { Link, useLocation, Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,21 +7,22 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../../styles/pages.module.css";
 import { forgotPassword } from "../../services/actions/authorization";
+import { TLocation, TForm } from "../../utils/types";
 
-export function ForgotPasswordPage() {
+export const ForgotPasswordPage: FC = () => {
   const dispatch = useDispatch();
-  const { state } = useLocation();
+  const { state } = useLocation<TLocation>();
   const history = useHistory();
-  const { loggedIn } = useSelector((store) => store.auth);
-  const [form, setValue] = useState({ email: "" });
+  const { loggedIn } = useSelector((store: any) => store.auth);
+  const [form, setValue] = useState<TForm>({ email: "" });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(forgotPassword(form.email));
     history.push({ pathname: '/reset-password', state: { prevPathname: history.location.pathname } });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -35,10 +36,9 @@ export function ForgotPasswordPage() {
     <form onSubmit={handleSubmit} className={styles.container}>
       <EmailInput
         onChange={handleChange}
-        value={form.email}
+        value={`${form.email}`}
         name={"email"}
         size={"default"}
-        className="pt-6"
       />
       <Button type="primary" size="medium">
         Восстановить

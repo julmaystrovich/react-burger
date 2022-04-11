@@ -1,10 +1,13 @@
 import styles from "./404-page.module.css";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import Empty from "../../images/empty.png";
-export function NotFoundPage({ history }) {
+import { FC } from "react";
+
+export const NotFoundPage: FC<any> = ({ history }) => {
   function handleBack() {
     history.goBack();
   }
+  
   return (
     <main className={styles.error_page}>
         <img src={Empty} className={styles.error_pic} alt="empty burger store" />

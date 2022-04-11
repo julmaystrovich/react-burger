@@ -1,5 +1,5 @@
-import { React, useState, useEffect } from "react";
-import { useLocation, NavLink } from "react-router-dom";
+import React, { useState, useEffect, FC } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Input,
@@ -9,14 +9,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../../styles/pages.module.css";
 import { logOut, updateUser } from "../../services/actions/authorization";
+import { TForm } from "../../utils/types";
 
-export function ProfilePage() {
+export const ProfilePage: FC = () => {
   const dispatch = useDispatch();
-  const { state } = useLocation();
-  const { loggedIn, user } = useSelector((store) => store.auth);
-  const [form, setValue] = useState({ email: "", password: "", name: "" });
-  const location = useLocation();
-  const [isChanged, setIsChanged] = useState(false);
+  const { loggedIn, user } = useSelector((store: any) => store.auth);
+  const [form, setValue] = useState<TForm>({ email: "", password: "", name: "" });
+  const [isChanged, setIsChanged] = useState<boolean>(false);
 
   const setValues = () => {
     setValue({ email: user.email, password: "", name: user.name });
@@ -28,25 +27,23 @@ export function ProfilePage() {
 
   useEffect(() => {
     setIsChanged(
-      form.email !== user.email || form.name !== user.name || form.password
+      form.email !== user.email || form.name !== user.name || form.password !== ''
     );
   }, [user, form]);
 
-  const onCancel = (e) => {
-    e.preventDefault();
+  const onCancel = () => {
     setValues();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(updateUser(form.email, form.name));
   };
-  const handleLogout = (e) => {
-    e.preventDefault();
+  const handleLogout = () => {
     dispatch(logOut());
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
   return (
@@ -75,7 +72,7 @@ export function ProfilePage() {
           История заказов
         </NavLink>
         <NavLink
-          to="/logout"
+          to="/"
           onClick={handleLogout}
           exact
           activeStyle={{ color: "white" }}
@@ -96,19 +93,19 @@ export function ProfilePage() {
           name={"name"}
           placeholder={"Имя"}
           onChange={handleChange}
-          value={form.name}
+          value={`${form.name}`}
           error={false}
           size={"default"}
         />
         <EmailInput
           onChange={handleChange}
-          value={form.email}
+          value={`${form.email}`}
           name={"email"}
           size={"default"}
         />
         <PasswordInput
           onChange={handleChange}
-          value={form.password}
+          value={`${form.password}`}
           name={"password"}
         />
         {isChanged && (

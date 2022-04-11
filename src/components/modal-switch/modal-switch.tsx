@@ -1,10 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import AppHeader from "../app-header/app-header";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-detail";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useSelector, useDispatch } from "react-redux";
-import { getBurgerIngredients } from "../../services/actions/ingredients";
 import { closeOrderModal } from "../../services/actions/order";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { NotFoundPage } from "../../pages/404-page/404";
@@ -16,14 +15,14 @@ import { MainPage } from "../../pages/main/main";
 import { ProfilePage } from "../../pages/profile/profile";
 import ProtectedRoute from "../protected-route/protected-route";
 import { IngredientsPage } from "../../pages/ingredients/ingredients-list";
-import { getUser } from "../../services/actions/authorization";
+import { TLocation } from "../../utils/types";
 
-function ModalSwitch() {
+const ModalSwitch: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<TLocation>();
   const background = location.state && location.state.background;
-  const { orderNumber } = useSelector((store) => store.order);
+  const { orderNumber } = useSelector((store: any) => store.order);
 
   const closeIngredientModalPopup = () => {
     history.goBack();
