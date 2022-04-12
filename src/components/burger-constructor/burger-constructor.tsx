@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, FC } from "react";
 import styles from "./burger-constructor.module.css";
 import {
   Button,
@@ -16,23 +16,24 @@ import {
 import { useDrop } from "react-dnd";
 import { getOrderNumber } from "../../services/actions/order";
 import { useHistory } from 'react-router-dom';
+import { TIngredient, TBurgerConstructorComponent } from "../../utils/types";
 
-function BurgerConstructor() {
+const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
-  const { burgerConstructor } = useSelector((store) => store.constructor);
-  const { orderRequest } = useSelector((store) => store.order);
+  const { burgerConstructor } = useSelector((store: any) => store.constructor);
+  const { orderRequest } = useSelector((store: any) => store.order);
   const history = useHistory();
-  const { loggedIn } = useSelector(store => store.auth);
+  const { loggedIn } = useSelector((store: any) => store.auth);
   const burgerBuns = burgerConstructor?.find(
-    (ingredient) => ingredient.type === "bun"
+    (ingredient: TIngredient) => ingredient.type === "bun"
   );
   const burgerFill = burgerConstructor?.filter(
-    (ingredient) => ingredient.type !== "bun"
+    (ingredient: TIngredient) => ingredient.type !== "bun"
   );
 
   const getOrderNumberPopup = React.useCallback(() => {
     if (loggedIn) {
-      const burgerIngredients = burgerConstructor.map(((item) => item._id));
+      const burgerIngredients = burgerConstructor.map(((item: TIngredient) => item._id));
       dispatch(getOrderNumber(burgerIngredients));
   } else {
       history.push("/login");
@@ -42,12 +43,12 @@ function BurgerConstructor() {
   const orderPrice = React.useMemo(
     () =>
       burgerConstructor
-        ? burgerConstructor.reduce((sum, current) => sum + current.price, 0)
+        ? burgerConstructor.reduce((sum: number, current: TIngredient) => sum + current.price, 0)
         : 0,
     [burgerConstructor]
   );
 
-  const handleDrop = (item) => {
+  const handleDrop = (item: TIngredient) => {
     const uuid = uuidv4();
     if (item.type === "bun" && burgerBuns) {
       dispatch(removeIngredient(burgerBuns.uuid));
@@ -55,18 +56,18 @@ function BurgerConstructor() {
     dispatch(addIngredient(item, uuid));
   };
 
-  const handleMove = useCallback((dragIndex, hoverIndex) => {
+  const handleMove = (dragIndex: number, hoverIndex: number) => {
     dispatch(moveIngredient(dragIndex, hoverIndex));
-  });
+  };
 
   const [, dropTarget] = useDrop({
     accept: "ingredients",
-    drop: (ingredient) => {
+    drop: (ingredient: TIngredient) => {
       handleDrop(ingredient);
     },
   });
 
-  const handleRemove = (uuid) => {
+  const handleRemove = (uuid: string) => {
     dispatch(removeIngredient(uuid));
   };
 
@@ -82,12 +83,11 @@ function BurgerConstructor() {
             text={burgerBuns.name + " (верх)"}
             price={burgerBuns.price}
             thumbnail={burgerBuns.image_mobile}
-            className={styles.constr_inside + " pr-4 pl-4"}
           />
         )}
         <div className={styles.constr_scroll}>
           {burgerFill &&
-            burgerFill.map((item, index) => {
+            burgerFill.map((item: TIngredient, index: number) => {
               return (
                 <BurgerConstructorItem
                   key={item.uuid}

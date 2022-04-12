@@ -1,34 +1,36 @@
-import React, { useMemo } from "react";
+import React, { useMemo, FC } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "./burger-ingredient";
 import { useSelector } from "react-redux";
+import { TIngredient } from "../../utils/types";
 
-function BurgerIngredients() {
-  const { burgerData } = useSelector((store) => store.burgerData);
-  const [current, setCurrent] = React.useState("buns");
-  const bunRef = React.useRef();
-  const sauceRef = React.useRef();
-  const fillingRef = React.useRef();
-  const onClickTab = (value) => {
+const BurgerIngredients: FC = () => {
+  const { burgerData } = useSelector((store: any) => store.burgerData);
+  const [current, setCurrent] = React.useState<string>("buns");
+  const bunRef = React.useRef<HTMLDivElement>(null);
+  const sauceRef = React.useRef<HTMLDivElement>(null);
+  const fillingRef = React.useRef<HTMLDivElement>(null);
+  const mainRef = React.useRef<HTMLDivElement>(null);
+  const onClickTab = (value: string) => {
     setCurrent(value);
     const el = document.getElementById(value);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const onScrollTab = (e) => {
-    const bunSpace = bunRef.current.getBoundingClientRect().top;
-    const sauceSpace = sauceRef.current.getBoundingClientRect().top;
-    const fillingSpace = fillingRef.current.getBoundingClientRect().top;
-    const top = e.target.getBoundingClientRect().top;
+  const onScrollTab = () => {
+    const bunSpace = bunRef.current?.getBoundingClientRect().top as number;
+    const sauceSpace = sauceRef.current?.getBoundingClientRect().top as number;
+    const fillingSpace = fillingRef.current?.getBoundingClientRect().top as number;
+    const top = mainRef.current?.getBoundingClientRect().top as number;
 
-    const offset = {
+    const offset: { [key: string]: number } = {
       buns: Math.abs(bunSpace - top),
       filling: Math.abs(fillingSpace - top),
       sauce: Math.abs(sauceSpace - top),
     };
 
-    const activeTabs = Object.keys(offset).reduce((prev, current) =>
+    const activeTabs = Object.keys(offset).reduce((prev: string, current: string) =>
       offset[prev] < offset[current] ? prev : current
     );
 
@@ -38,17 +40,17 @@ function BurgerIngredients() {
   };
 
   const burgerBuns = useMemo(
-    () => burgerData.filter((item) => item.type === "bun"),
+    () => burgerData.filter((item: TIngredient) => item.type === "bun"),
     [burgerData]
   );
 
   const burgerSauce = useMemo(
-    () => burgerData.filter((item) => item.type === "sauce"),
+    () => burgerData.filter((item: TIngredient) => item.type === "sauce"),
     [burgerData]
   );
 
   const burgerMain = useMemo(
-    () => burgerData.filter((item) => item.type === "main"),
+    () => burgerData.filter((item: TIngredient) => item.type === "main"),
     [burgerData]
   );
 
@@ -70,12 +72,12 @@ function BurgerIngredients() {
           Начинки
         </Tab>
       </div>
-      <div className={styles.scroll_content + " mt-10"} onScroll={onScrollTab}>
+      <div className={styles.scroll_content + " mt-10"} onScroll={onScrollTab} ref={mainRef}>
         <p className="text text_type_main-medium" id="buns" ref={bunRef}>
           Булки
         </p>
         <div className={styles.ingrs_list + " pt-6 pr-4 pl-4"}>
-          {burgerBuns.map((item) => {
+          {burgerBuns.map((item: TIngredient) => {
             return <BurgerIngredient key={item._id} item={item} />;
           })}
         </div>
@@ -87,7 +89,7 @@ function BurgerIngredients() {
           Соусы
         </p>
         <div className={styles.ingrs_list + " pt-6 pr-4 pl-4"}>
-          {burgerSauce.map((item) => {
+          {burgerSauce.map((item: TIngredient) => {
             return <BurgerIngredient key={item._id} item={item} />;
           })}
         </div>
@@ -99,7 +101,7 @@ function BurgerIngredients() {
           Начинки
         </p>
         <div className={styles.ingrs_list + " pt-6 pr-4 pl-4"}>
-          {burgerMain.map((item) => {
+          {burgerMain.map((item: TIngredient) => {
             return <BurgerIngredient key={item._id} item={item} />;
           })}
         </div>

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React, { useState, FC } from "react";
 import { Link, useLocation, Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,16 +8,17 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../../styles/pages.module.css";
 import { resetPassword } from "../../services/actions/authorization";
+import { TLocation,TForm } from "../../utils/types";
 
-export function ResetPasswordPage() {
+export const ResetPasswordPage: FC = () => {
   const dispatch = useDispatch();
-  const { state } = useLocation();
-  const history = useHistory();
-  const { loggedIn, resetPasswordFailed, resetPasswordSuccess } = useSelector((store) => store.auth);
-  const [form, setValue] = useState({ password: "", token: "" });
+  const { state } = useLocation<TLocation>();
+  const history = useHistory() as any;
+  const { loggedIn, resetPasswordFailed, resetPasswordSuccess } = useSelector((store: any) => store.auth);
+  const [form, setValue] = useState<TForm>({ password: "", token: "" });
   const prevPathname = history.location.state?.prevPathname;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(resetPassword(form.password, form.token));
     if (!resetPasswordFailed) {
@@ -27,7 +28,7 @@ export function ResetPasswordPage() {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -46,16 +47,15 @@ export function ResetPasswordPage() {
       <form onSubmit={handleSubmit} className={styles.container}>
         <PasswordInput
           onChange={handleChange}
-          value={form.password}
+          value={`${form.password}`}
           name={"password"}
-          placeholder={"Введите новый пароль"}
         />
         <Input
           type={"text"}
           placeholder={"Введите код из письма"}
           onChange={handleChange}
           name="token"
-          value={form.token}
+          value={`${form.token}`}
           size={"default"}
         />
         <Button type="primary" size="medium">

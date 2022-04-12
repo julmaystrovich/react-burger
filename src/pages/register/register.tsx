@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React, { useState, FC } from "react";
 import { Link, useLocation, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,20 +9,21 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../../styles/pages.module.css";
 import { register } from "../../services/actions/authorization";
+import { TLocation, TForm } from "../../utils/types";
 
-export function RegisterPage() {
+export const RegisterPage: FC = () => {
   const dispatch = useDispatch();
-  const { state } = useLocation();
-  const { loggedIn } = useSelector((store) => store.auth);
-  const [form, setValue] = useState({ email: "", password: "", name: "" });
+  const { state } = useLocation<TLocation>();
+  const { loggedIn } = useSelector((store: any) => store.auth);
+  const [form, setValue] = useState<TForm>({ email: "", password: "", name: "" });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(register(form.email, form.password, form.name));
     console.log(form.email, form.password, form.name);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -38,14 +39,14 @@ export function RegisterPage() {
           name={"name"}
           placeholder={"Имя"}
           onChange={handleChange}
-          value={form.name}
+          value={`${form.name}`}
           error={false}
           size={"default"}
         />
-        <EmailInput onChange={handleChange} value={form.email} name={'email'} />
+        <EmailInput onChange={handleChange} value={`${form.email}`} name={'email'} />
         <PasswordInput
           onChange={handleChange}
-          value={form.password}
+          value={`${form.password}`}
           name={"password"}
         />
         <Button type="primary" size="medium">

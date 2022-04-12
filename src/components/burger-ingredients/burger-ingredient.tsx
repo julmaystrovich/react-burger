@@ -1,6 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { IngredientPropTypes } from "../../utils/propTypes";
+import React, { FC } from "react";
+import { TIngredientComponent, TIngredient } from "../../utils/types";
 import styles from "./burger-ingredients.module.css";
 import {
   CurrencyIcon,
@@ -11,16 +10,16 @@ import { openIngredientModal } from "../../services/actions/ingredients";
 import { useDrag } from "react-dnd";
 import { useLocation, Link } from "react-router-dom";
 
-function BurgerIngredient({ item }) {
+const BurgerIngredient: FC<TIngredientComponent> = ({ item }) => {
   const dispatch = useDispatch();
-  const { burgerData } = useSelector((store) => store.burgerData);
-  const { burgerConstructor } = useSelector((store) => store.constructor);
-  const count = burgerConstructor?.filter((it) => it._id === item._id).length;
+  const { burgerData } = useSelector((store: any) => store.burgerData);
+  const { burgerConstructor } = useSelector((store: any) => store.constructor);
+  const count = burgerConstructor?.filter((it: TIngredient) => it._id === item._id).length;
   const location = useLocation();
 
-  const handleClick = (e) => {
+  const handleClick = (e: any) => {
     const currentData = burgerData.find(
-      (item) => item._id === e.currentTarget.id
+      (item: TIngredient) => item._id === e.currentTarget.id
     );
     dispatch(openIngredientModal(currentData));
   };
@@ -65,9 +64,5 @@ function BurgerIngredient({ item }) {
     </Link>
   );
 }
-
-BurgerIngredient.propTypes = {
-  item: IngredientPropTypes.isRequired,
-};
 
 export default BurgerIngredient;
