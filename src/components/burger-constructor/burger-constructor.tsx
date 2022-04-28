@@ -1,4 +1,4 @@
-import React, { useCallback, FC } from "react";
+import React, { useMemo, FC } from "react";
 import styles from "./burger-constructor.module.css";
 import {
   Button,
@@ -27,8 +27,9 @@ const BurgerConstructor: FC = () => {
   const burgerBuns = burgerConstructor?.find(
     (ingredient: TIngredient) => ingredient.type === "bun"
   );
-  const burgerFill = burgerConstructor?.filter(
-    (ingredient: TIngredient) => ingredient.type !== "bun"
+  const burgerFill = useMemo(
+    () => burgerConstructor?.filter((ingredient: TIngredient) => ingredient.type !== "bun"),
+    [burgerConstructor]
   );
 
   const getOrderNumberPopup = React.useCallback(() => {

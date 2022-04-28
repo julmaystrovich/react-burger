@@ -2,14 +2,20 @@ import {
     ADD_CONSTRUCTOR_INGREDIENTS,
     REMOVE_CONSTRUCTOR_INGREDIENTS,
     MOVE_CONSTRUCTOR_INGREDIENTS,
-    CLEAR_CONSTRUCTOR
+    CLEAR_CONSTRUCTOR,
+    TConstructorActions
 } from '../actions/constructor';
+import { TIngredient } from '../../utils/types';
 
-const constructorInitialState = {
+export type TConstructorState = {
+    burgerConstructor: Array<TIngredient>;
+};
+
+const constructorInitialState: TConstructorState = {
     burgerConstructor: []
 };
 
-const constructorReducer = (state = constructorInitialState, action) => {
+const constructorReducer = (state = constructorInitialState, action: TConstructorActions): TConstructorState => {
     switch (action.type) {
         case ADD_CONSTRUCTOR_INGREDIENTS: {
             return {
@@ -24,11 +30,11 @@ const constructorReducer = (state = constructorInitialState, action) => {
             };
         }
         case REMOVE_CONSTRUCTOR_INGREDIENTS: {
-            return { ...state, burgerConstructor: [...state.burgerConstructor.filter((ingredient) => ingredient.uuid !== action.uuid)] };
+            return { ...state, burgerConstructor: [...state.burgerConstructor.filter((ingredient: TIngredient) => ingredient.uuid !== action.uuid)] };
         }
         case MOVE_CONSTRUCTOR_INGREDIENTS: {
-            const burgerFilling = state.burgerConstructor.filter(ingredient => ingredient.type !== 'bun');
-            const burgerBun = state.burgerConstructor.filter(ingredient => ingredient.type === 'bun');
+            const burgerFilling = state.burgerConstructor.filter((ingredient: TIngredient) => ingredient.type !== 'bun');
+            const burgerBun = state.burgerConstructor.filter((ingredient: TIngredient) => ingredient.type === 'bun');
             const newBurgerFilling = [...burgerFilling];
             const dragItem = newBurgerFilling.splice(action.dragIndex, 1);
             newBurgerFilling.splice(action.hoverIndex, 0, dragItem[0]);

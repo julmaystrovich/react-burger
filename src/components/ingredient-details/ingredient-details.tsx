@@ -7,7 +7,7 @@ import { TIngredient, TParams } from "../../utils/types";
 const IngredientDetails: FC = () => {
   const { burgerData } = useSelector((store: any) => store.burgerData);
   const params = useParams<TParams>();
-  const id = params.ingredientId;
+  const id = params.id;
   const currentIngredient = React.useMemo(
     () => burgerData.find((item: TIngredient) => item._id === id),
     [burgerData, id]

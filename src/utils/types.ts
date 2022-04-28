@@ -1,4 +1,5 @@
 import { Location } from "history";
+import { match } from 'react-router-dom';
 
 export type TIngredient = {
     _id: string,
@@ -49,7 +50,7 @@ export type TLocation = {
 }
 
 export type TParams = {
-    ingredientId: string;
+    id: string;
 }
 
 export type TForm = {
@@ -57,4 +58,46 @@ export type TForm = {
     email?: string;
     password?: string;
     token?: string;
+}
+
+export type TOrderNumber = {
+    orderNumber: number;
+}
+
+export type TOrder = {
+    ingredients: Array<TIngredientId | string>;
+    _id: string;
+    name: string;
+    status: string;
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+  };
+
+export type TOrders = {
+    orders: Array<TOrder>;
+    total: number;
+    totalToday: number;
+}
+
+export type TUser = {
+    name: string;
+    email: string;
+}
+
+export type TFeedItemComponent = {
+    orderID: string;
+    orderNumber: number;
+    orderDate: string;
+    orderName: string;
+    status: string;
+    ingredients: Array<TIngredientId | string>;
+    isUserOrder: match<{}> | null;
+}
+
+export type TOrderItem = {
+    name: string;
+    ingredient: TIngredient; 
+    image: string;
+    currentOrder: TOrder;
 }

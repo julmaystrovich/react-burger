@@ -20,7 +20,6 @@ export const RegisterPage: FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(register(form.email, form.password, form.name));
-    console.log(form.email, form.password, form.name);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -16,6 +16,8 @@ import { ProfilePage } from "../../pages/profile/profile";
 import ProtectedRoute from "../protected-route/protected-route";
 import { IngredientsPage } from "../../pages/ingredients/ingredients-list";
 import { TLocation } from "../../utils/types";
+import { FeedPage } from "../../pages/feed/feed";
+import { OrderPage } from "../../pages/order/order";
 
 const ModalSwitch: FC = () => {
   const dispatch = useDispatch();
@@ -39,6 +41,9 @@ const ModalSwitch: FC = () => {
         <Route path="/" exact={true}>
           <MainPage />
         </Route>
+        <ProtectedRoute path="/profile/orders/:id">
+          <OrderPage />
+        </ProtectedRoute>
         <Route path="/login">
           <LoginPage />
         </Route>
@@ -54,15 +59,21 @@ const ModalSwitch: FC = () => {
         <ProtectedRoute path="/profile">
           <ProfilePage />
         </ProtectedRoute>
-        <Route path="/ingredients/:ingredientId">
+        <Route path="/ingredients/:id">
           <IngredientsPage />
+        </Route>
+        <Route path="/feed" exact={true}>
+          <FeedPage />
+        </Route>
+        <Route path="/feed/:id" exact={true}>
+          <OrderPage />
         </Route>
         <Route path="*">
           <NotFoundPage history={history} />
         </Route>
       </Switch>
       {background && (
-        <Route path="/ingredients/:ingredientId">
+        <Route path="/ingredients/:id">
           <Modal
             header="Детали ингредиента"
             onClose={closeIngredientModalPopup}
@@ -76,8 +87,22 @@ const ModalSwitch: FC = () => {
           <OrderDetails />
         </Modal>
       )}
+      {background && (
+        <Route path="/feed/:id">
+          <Modal header="Заказ" onClose={closeIngredientModalPopup}>
+            <OrderPage />
+          </Modal>
+        </Route>
+      )}
+      {background && (
+        <ProtectedRoute path="/profile/orders/:id">
+          <Modal header="Заказ" onClose={closeIngredientModalPopup}>
+            <OrderPage />
+          </Modal>
+        </ProtectedRoute>
+      )}
     </div>
   );
-}
+};
 
 export default ModalSwitch;
