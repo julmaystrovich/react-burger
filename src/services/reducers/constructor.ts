@@ -30,11 +30,11 @@ const constructorReducer = (state = constructorInitialState, action: TConstructo
             };
         }
         case REMOVE_CONSTRUCTOR_INGREDIENTS: {
-            return { ...state, burgerConstructor: [...state.burgerConstructor.filter((ingredient: TIngredient) => ingredient.uuid !== action.uuid)] };
+            return { ...state, burgerConstructor: [...state.burgerConstructor.filter((ingredient) => ingredient.uuid !== action.uuid)] };
         }
         case MOVE_CONSTRUCTOR_INGREDIENTS: {
-            const burgerFilling = state.burgerConstructor.filter((ingredient: TIngredient) => ingredient.type !== 'bun');
-            const burgerBun = state.burgerConstructor.filter((ingredient: TIngredient) => ingredient.type === 'bun');
+            const burgerFilling = state.burgerConstructor.filter((ingredient) => ingredient.type !== 'bun');
+            const burgerBun = state.burgerConstructor.filter((ingredient) => ingredient.type === 'bun');
             const newBurgerFilling = [...burgerFilling];
             const dragItem = newBurgerFilling.splice(action.dragIndex, 1);
             newBurgerFilling.splice(action.hoverIndex, 0, dragItem[0]);

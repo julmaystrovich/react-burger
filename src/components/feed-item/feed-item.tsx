@@ -1,20 +1,21 @@
 import React, { FC } from "react";
 import styles from "./feed-item.module.css";
 import { TFeedItemComponent, TIngredient } from "../../utils/types";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import { useLocation, Link } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { translateStatus } from "../../utils/utils";
+import moment from 'moment';
 
 const FeedItem: FC<TFeedItemComponent> = ({orderID, orderNumber, orderDate, orderName, ingredients, status, isUserOrder}) => {
     const location = useLocation();
-    const { burgerData } = useSelector((store: any) => store.burgerData);
-    const burgerIngredients = burgerData?.filter((item: TIngredient) => ingredients.includes(item._id));
+    const { burgerData } = useSelector((store) => store.burgerData);
+    const burgerIngredients = burgerData?.filter((item) => ingredients.includes(item._id));
 
     const orderPrice = React.useMemo(
         () =>
         burgerIngredients
-            ? burgerIngredients.reduce((sum: number, current: TIngredient) => sum + current.price, 0)
+            ? burgerIngredients.reduce((sum, current) => sum + current.price, 0)
             : 0,
         [burgerIngredients]
     );
@@ -33,7 +34,7 @@ const FeedItem: FC<TFeedItemComponent> = ({orderID, orderNumber, orderDate, orde
           <div className={styles.item_section}>
             <div className={styles.order_info}>
               <p className={styles.order_id + " text text_type_digits-default pb-6"}>#{orderNumber}</p>
-              <p className="text text_type_main-default pb-6">{orderDate}</p>
+              <p className="text text_type_main-default pb-6">{moment(orderDate).calendar()}</p>
           </div>
               <p className={styles.order_name + " text text_type_main-default pb-6"}>{orderName}</p>
               {isUserOrder && <p className="text text_type_main-default pt-2 pb-6">{translateStatus(status)}</p>}

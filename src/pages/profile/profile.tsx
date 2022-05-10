@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC } from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import {
   Input,
   EmailInput,
@@ -15,7 +15,7 @@ import OrdersList from "../../components/orders-list/orders-list";
 
 export const ProfilePage: FC = () => {
   const dispatch = useDispatch();
-  const { loggedIn, user } = useSelector((store: any) => store.auth);
+  const { loggedIn, user } = useSelector((store) => store.auth);
   const [form, setValue] = useState<TForm>({
     email: "",
     password: "",
@@ -27,7 +27,7 @@ export const ProfilePage: FC = () => {
   const profileOrdersPageMatch = useRouteMatch("/profile/orders");
 
   const setValues = () => {
-    setValue({ email: user.email, password: "", name: user.name });
+    setValue({ email: user!.email, password: "", name: user!.name });
   };
 
   useEffect(() => {
@@ -36,8 +36,8 @@ export const ProfilePage: FC = () => {
 
   useEffect(() => {
     setIsChanged(
-      form.email !== user.email ||
-        form.name !== user.name ||
+      form.email !== user!.email ||
+        form.name !== user!.name ||
         form.password !== ""
     );
   }, [user, form]);

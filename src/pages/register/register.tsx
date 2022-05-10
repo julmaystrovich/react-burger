@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 import { Link, useLocation, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import {
   Input,
   EmailInput,
@@ -14,7 +14,7 @@ import { TLocation, TForm } from "../../utils/types";
 export const RegisterPage: FC = () => {
   const dispatch = useDispatch();
   const { state } = useLocation<TLocation>();
-  const { loggedIn } = useSelector((store: any) => store.auth);
+  const { loggedIn } = useSelector((store) => store.auth);
   const [form, setValue] = useState<TForm>({ email: "", password: "", name: "" });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

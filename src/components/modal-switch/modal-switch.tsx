@@ -3,7 +3,7 @@ import AppHeader from "../app-header/app-header";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-detail";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import { closeOrderModal } from "../../services/actions/order";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { NotFoundPage } from "../../pages/404-page/404";
@@ -24,7 +24,7 @@ const ModalSwitch: FC = () => {
   const history = useHistory();
   const location = useLocation<TLocation>();
   const background = location.state && location.state.background;
-  const { orderNumber } = useSelector((store: any) => store.order);
+  const { orderNumber } = useSelector((store) => store.order);
 
   const closeIngredientModalPopup = () => {
     history.goBack();

@@ -6,7 +6,7 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorItem from "./burger-constructor-item";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import { v4 as uuidv4 } from "uuid";
 import {
   addIngredient,
@@ -16,25 +16,25 @@ import {
 import { useDrop } from "react-dnd";
 import { getOrderNumber } from "../../services/actions/order";
 import { useHistory } from 'react-router-dom';
-import { TIngredient, TBurgerConstructorComponent } from "../../utils/types";
+import { TIngredient } from "../../utils/types";
 
 const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
-  const { burgerConstructor } = useSelector((store: any) => store.constructor);
-  const { orderRequest } = useSelector((store: any) => store.order);
+  const { burgerConstructor } = useSelector((store) => store.constructor);
+  const { orderNumberRequest } = useSelector((store) => store.order);
   const history = useHistory();
-  const { loggedIn } = useSelector((store: any) => store.auth);
+  const { loggedIn } = useSelector((store) => store.auth);
   const burgerBuns = burgerConstructor?.find(
-    (ingredient: TIngredient) => ingredient.type === "bun"
+    (ingredient) => ingredient.type === "bun"
   );
   const burgerFill = useMemo(
-    () => burgerConstructor?.filter((ingredient: TIngredient) => ingredient.type !== "bun"),
+    () => burgerConstructor?.filter((ingredient) => ingredient.type !== "bun"),
     [burgerConstructor]
   );
 
   const getOrderNumberPopup = React.useCallback(() => {
     if (loggedIn) {
-      const burgerIngredients = burgerConstructor.map(((item: TIngredient) => item._id));
+      const burgerIngredients = burgerConstructor.map(((item) => item._id));
       dispatch(getOrderNumber(burgerIngredients));
   } else {
       history.push("/login");
@@ -44,7 +44,7 @@ const BurgerConstructor: FC = () => {
   const orderPrice = React.useMemo(
     () =>
       burgerConstructor
-        ? burgerConstructor.reduce((sum: number, current: TIngredient) => sum + current.price, 0)
+        ? burgerConstructor.reduce((sum, current) => sum + current.price, 0)
         : 0,
     [burgerConstructor]
   );
@@ -72,7 +72,7 @@ const BurgerConstructor: FC = () => {
     dispatch(removeIngredient(uuid));
   };
 
-  const isDisabled = !burgerConstructor?.length || orderRequest || !burgerBuns;
+  const isDisabled = !burgerConstructor?.length || orderNumberRequest || !burgerBuns;
 
   return (
     <section className={styles.constr_section + " ml-10 pt-25"}>
@@ -88,7 +88,7 @@ const BurgerConstructor: FC = () => {
         )}
         <div className={styles.constr_scroll}>
           {burgerFill &&
-            burgerFill.map((item: TIngredient, index: number) => {
+            burgerFill.map((item, index) => {
               return (
                 <BurgerConstructorItem
                   key={item.uuid}

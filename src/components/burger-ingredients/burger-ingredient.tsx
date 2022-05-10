@@ -1,27 +1,27 @@
 import React, { FC, useMemo } from "react";
-import { TIngredientComponent, TIngredient } from "../../utils/types";
+import { TIngredientComponent } from "../../utils/types";
 import styles from "./burger-ingredients.module.css";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import { openIngredientsDetails } from "../../services/actions/ingredients";
 import { useDrag } from "react-dnd";
 import { useLocation, Link } from "react-router-dom";
 
 const BurgerIngredient: FC<TIngredientComponent> = ({ item }) => {
   const dispatch = useDispatch();
-  const { burgerData } = useSelector((store: any) => store.burgerData);
-  const { burgerConstructor } = useSelector((store: any) => store.constructor);
-  const count = useMemo(() => burgerConstructor?.filter((it: TIngredient) => it._id === item._id).length, [burgerConstructor]);
+  const { burgerData } = useSelector((store) => store.burgerData);
+  const { burgerConstructor } = useSelector((store) => store.constructor);
+  const count = useMemo(() => burgerConstructor?.filter((it) => it._id === item._id).length, [burgerConstructor]);
   const location = useLocation();
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: React.MouseEvent) => {
     const currentData = burgerData.find(
-      (item: TIngredient) => item._id === e.currentTarget.id
+      (item) => item._id === e.currentTarget.id
     );
-    dispatch(openIngredientsDetails(currentData));
+    dispatch(openIngredientsDetails(currentData!));
   };
 
   const [{ isDrag }, dragRef] = useDrag({

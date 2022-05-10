@@ -1,15 +1,15 @@
 import React, { FC } from "react";
 import styles from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import { useParams } from "react-router-dom";
 import { TIngredient, TParams } from "../../utils/types";
 
 const IngredientDetails: FC = () => {
-  const { burgerData } = useSelector((store: any) => store.burgerData);
+  const { burgerData } = useSelector((store) => store.burgerData);
   const params = useParams<TParams>();
   const id = params.id;
   const currentIngredient = React.useMemo(
-    () => burgerData.find((item: TIngredient) => item._id === id),
+    () => burgerData.find((item) => item._id === id),
     [burgerData, id]
   );
   

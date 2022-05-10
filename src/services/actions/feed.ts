@@ -1,31 +1,30 @@
 import { TOrders } from '../../utils/types';
 
-export const WS_ORDER_CONNECTION_START: "WS_ORDER_CONNECTION_START" = "WS_ORDER_CONNECTION_START";
-export const WS_ORDER_CONNECTION_SUCCESS: 'WS_ORDER_CONNECTION_SUCCESS' = 'WS_ORDER_CONNECTION_SUCCESS';
-export const WS_ORDER_CONNECTION_ERROR: 'WS_ORDER_CONNECTION_ERROR' = 'WS_ORDER_CONNECTION_ERROR';
-export const WS_ORDER_CONNECTION_CLOSED: 'WS_ORDER_CONNECTION_CLOSED' = 'WS_ORDER_CONNECTION_CLOSED';
+export const WS_CONNECTION_START: "WS_CONNECTION_START" = "WS_CONNECTION_START";
+export const WS_CONNECTING: "WS_CONNECTING" = "WS_CONNECTING";
+export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS';
+export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
+export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSED';
 export const WS_ORDER_GET: 'WS_ORDER_GET' = 'WS_ORDER_GET';
 
-export const WS_USER_ORDER_CONNECTION_START: "WS_USER_ORDER_CONNECTION_START" = "WS_USER_ORDER_CONNECTION_START";
-export const WS_USER_ORDER_CONNECTION_SUCCESS: 'WS_USER_ORDER_CONNECTION_SUCCESS' = 'WS_USER_ORDER_CONNECTION_SUCCESS'; 
-export const WS_USER_ORDER_CONNECTION_ERROR: 'WS_USER_ORDER_CONNECTION_ERROR' = 'WS_USER_ORDER_CONNECTION_ERROR';
-export const WS_USER_ORDER_CONNECTION_CLOSED: 'WS_USER_ORDER_CONNECTION_CLOSED' = 'WS_USER_ORDER_CONNECTION_CLOSED';
-export const WS_USER_ORDER_GET: 'WS_USER_ORDER_GET' = 'WS_USER_ORDER_GET';
-
-export interface IWsOrderConnectionStartAction {
-    readonly type: typeof WS_ORDER_CONNECTION_START;
+export interface IWsConnectionStartAction {
+    readonly type: typeof WS_CONNECTION_START;
+    readonly payload: string; // url
 }
 
-export interface IWsOrderConnectionSuccessAction {
-    readonly type: typeof WS_ORDER_CONNECTION_SUCCESS;
+export interface IWsConnecting {
+    readonly type: typeof WS_CONNECTING;
+};
+export interface IWsConnectionSuccessAction {
+    readonly type: typeof WS_CONNECTION_SUCCESS;
 }
 
-export interface IWsOrderConnectionErrorAction {
-    readonly type: typeof WS_ORDER_CONNECTION_ERROR;
+export interface IWsConnectionErrorAction {
+    readonly type: typeof WS_CONNECTION_ERROR;
 }
 
-export interface IWsOrderConnectionClosedAction {
-    readonly type: typeof WS_ORDER_CONNECTION_CLOSED;
+export interface IWsConnectionClosedAction {
+    readonly type: typeof WS_CONNECTION_CLOSED;
 }
 
 export interface IWsOrderGetAction {
@@ -33,100 +32,46 @@ export interface IWsOrderGetAction {
     readonly orders: TOrders;
 }
 
-export interface IWsUserOrderConnectionStartAction {
-    readonly type: typeof WS_USER_ORDER_CONNECTION_START;
-}
-
-export interface IWsUserOrderConnectionSuccessAction {
-    readonly type: typeof WS_USER_ORDER_CONNECTION_SUCCESS;
-}
-
-export interface IWsUserOrderConnectionErrorAction {
-    readonly type: typeof WS_USER_ORDER_CONNECTION_ERROR;
-}
-
-export interface IWsUserOrderConnectionClosedAction {
-    readonly type: typeof WS_USER_ORDER_CONNECTION_CLOSED;
-}
-
-export interface IWsUserOrderGetAction {
-    readonly type: typeof WS_USER_ORDER_GET;
-    readonly orders: TOrders;
-}
-
 export type TFeedActions =
-  | IWsOrderConnectionStartAction
-  | IWsOrderConnectionSuccessAction
-  | IWsOrderConnectionErrorAction
-  | IWsOrderConnectionClosedAction
-  | IWsOrderGetAction
-  | IWsUserOrderConnectionStartAction
-  | IWsUserOrderConnectionSuccessAction
-  | IWsUserOrderConnectionErrorAction
-  | IWsUserOrderConnectionClosedAction
-  | IWsUserOrderGetAction;
+  | IWsConnectionStartAction
+  | IWsConnecting
+  | IWsConnectionSuccessAction
+  | IWsConnectionErrorAction
+  | IWsConnectionClosedAction
+  | IWsOrderGetAction;
 
-export const wsOrderConnectionStartAction = (): IWsOrderConnectionStartAction => ({
-    type: WS_ORDER_CONNECTION_START
+export const wsConnectionStartAction = (payload: string): IWsConnectionStartAction => ({
+    type: WS_CONNECTION_START,
+    payload
 });
-export const wsOrderConnectionSuccessAction = (): IWsOrderConnectionSuccessAction => ({
-    type: WS_ORDER_CONNECTION_SUCCESS
+export const wsOrderConnectionSuccessAction = (): IWsConnectionSuccessAction => ({
+    type: WS_CONNECTION_SUCCESS
 });
-export const wsOrderConnectionErrorAction = (): IWsOrderConnectionErrorAction => ({
-    type: WS_ORDER_CONNECTION_ERROR
+export const wsOrderConnectionErrorAction = (): IWsConnectionErrorAction => ({
+    type: WS_CONNECTION_ERROR
 });
-export const wsOrderConnectionClosedAction = (): IWsOrderConnectionClosedAction => ({
-    type: WS_ORDER_CONNECTION_CLOSED
+export const wsConnectionClosedAction = (): IWsConnectionClosedAction => ({
+    type: WS_CONNECTION_CLOSED
 });
 export const wsOrderGetAction = (orders: TOrders): IWsOrderGetAction => ({
     type: WS_ORDER_GET,
     orders
 });
-export const wsUserOrderConnectionStartAction = (): IWsUserOrderConnectionStartAction => ({
-    type: WS_USER_ORDER_CONNECTION_START
-});
-export const wsUserOrderConnectionSuccessAction = (): IWsUserOrderConnectionSuccessAction => ({
-    type: WS_USER_ORDER_CONNECTION_SUCCESS
-});
-export const wsUserOrderConnectionErrorAction = (): IWsUserOrderConnectionErrorAction => ({
-    type: WS_USER_ORDER_CONNECTION_ERROR
-});
-export const wsUserOrderConnectionClosedAction = (): IWsUserOrderConnectionClosedAction => ({
-    type: WS_USER_ORDER_CONNECTION_CLOSED
-});
-export const wsUserOrderGetAction = (orders: TOrders): IWsUserOrderGetAction => ({
-    type: WS_USER_ORDER_GET,
-    orders
-});
 
 export type TWsOrderActions = {
-    wsInit: typeof WS_ORDER_CONNECTION_START;
-    onOpen: typeof WS_ORDER_CONNECTION_SUCCESS;
-    onError: typeof WS_ORDER_CONNECTION_ERROR;
-    onClose: typeof WS_ORDER_CONNECTION_CLOSED;
+    wsInit: typeof WS_CONNECTION_START;
+    wsConnecting: typeof WS_CONNECTING;
+    onOpen: typeof WS_CONNECTION_SUCCESS;
+    onError: typeof WS_CONNECTION_ERROR;
+    onClose: typeof WS_CONNECTION_CLOSED;
     onOrders: typeof WS_ORDER_GET;
 };
 
 export const wsOrderActions: TWsOrderActions = {
-    wsInit: WS_ORDER_CONNECTION_START,
-    onOpen: WS_ORDER_CONNECTION_SUCCESS,
-    onError: WS_ORDER_CONNECTION_ERROR,
-    onClose: WS_ORDER_CONNECTION_CLOSED,
+    wsInit: WS_CONNECTION_START,
+    wsConnecting: WS_CONNECTING,
+    onOpen: WS_CONNECTION_SUCCESS,
+    onError: WS_CONNECTION_ERROR,
+    onClose: WS_CONNECTION_CLOSED,
     onOrders: WS_ORDER_GET,
-};
-
-export type TWsUserOrderActions = {
-    wsInit: typeof WS_USER_ORDER_CONNECTION_START;
-    onOpen: typeof WS_USER_ORDER_CONNECTION_SUCCESS;
-    onError: typeof WS_USER_ORDER_CONNECTION_ERROR;
-    onClose: typeof WS_USER_ORDER_CONNECTION_CLOSED;
-    onOrders: typeof WS_USER_ORDER_GET;
-};
-
-export const wsUserOrderActions: TWsUserOrderActions = {
-    wsInit: WS_USER_ORDER_CONNECTION_START,
-    onOpen: WS_USER_ORDER_CONNECTION_SUCCESS,
-    onError: WS_USER_ORDER_CONNECTION_ERROR,
-    onClose: WS_USER_ORDER_CONNECTION_CLOSED,
-    onOrders: WS_USER_ORDER_GET,
 };
