@@ -6,6 +6,7 @@ import { useLocation, Link } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { translateStatus } from "../../utils/utils";
 import moment from 'moment';
+import 'moment/locale/ru';
 
 const FeedItem: FC<TFeedItemComponent> = ({orderID, orderNumber, orderDate, orderName, ingredients, status, isUserOrder}) => {
     const location = useLocation();

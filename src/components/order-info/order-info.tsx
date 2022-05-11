@@ -8,6 +8,7 @@ import { useRouteMatch } from "react-router-dom";
 import OrderItem from "../order-item/order-item";
 import { translateStatus } from "../../utils/utils";
 import moment from "moment";
+import 'moment/locale/ru';
 
 const OrderInfo: FC = () => {
     const { id } = useParams<TParams>();
