@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 import { Link, useLocation, Redirect, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import {
   Input,
   PasswordInput,
@@ -14,7 +14,7 @@ export const ResetPasswordPage: FC = () => {
   const dispatch = useDispatch();
   const { state } = useLocation<TLocation>();
   const history = useHistory() as any;
-  const { loggedIn, resetPasswordFailed, resetPasswordSuccess } = useSelector((store: any) => store.auth);
+  const { loggedIn, resetPasswordFailed, resetPasswordSuccess } = useSelector((store) => store.auth);
   const [form, setValue] = useState<TForm>({ password: "", token: "" });
   const prevPathname = history.location.state?.prevPathname;
 

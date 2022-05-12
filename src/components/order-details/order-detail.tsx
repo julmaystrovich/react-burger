@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import styles from "./order-details.module.css";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 
 const OrderDetails: FC = () => {
-  const { orderNumber } = useSelector((store: any) => store.order);
+  const { orderNumber } = useSelector((store) => store.order);
   return (
     <div className={styles.order_container + " pb-30 pt-6"}>
       <p className="text text_type_digits-large">{orderNumber}</p>

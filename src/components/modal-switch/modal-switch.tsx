@@ -3,7 +3,7 @@ import AppHeader from "../app-header/app-header";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-detail";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import { closeOrderModal } from "../../services/actions/order";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { NotFoundPage } from "../../pages/404-page/404";
@@ -16,13 +16,15 @@ import { ProfilePage } from "../../pages/profile/profile";
 import ProtectedRoute from "../protected-route/protected-route";
 import { IngredientsPage } from "../../pages/ingredients/ingredients-list";
 import { TLocation } from "../../utils/types";
+import { FeedPage } from "../../pages/feed/feed";
+import { OrderPage } from "../../pages/order/order";
 
 const ModalSwitch: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation<TLocation>();
   const background = location.state && location.state.background;
-  const { orderNumber } = useSelector((store: any) => store.order);
+  const { orderNumber } = useSelector((store) => store.order);
 
   const closeIngredientModalPopup = () => {
     history.goBack();
@@ -39,6 +41,9 @@ const ModalSwitch: FC = () => {
         <Route path="/" exact={true}>
           <MainPage />
         </Route>
+        <ProtectedRoute path="/profile/orders/:id">
+          <OrderPage />
+        </ProtectedRoute>
         <Route path="/login">
           <LoginPage />
         </Route>
@@ -54,15 +59,21 @@ const ModalSwitch: FC = () => {
         <ProtectedRoute path="/profile">
           <ProfilePage />
         </ProtectedRoute>
-        <Route path="/ingredients/:ingredientId">
+        <Route path="/ingredients/:id">
           <IngredientsPage />
+        </Route>
+        <Route path="/feed" exact={true}>
+          <FeedPage />
+        </Route>
+        <Route path="/feed/:id" exact={true}>
+          <OrderPage />
         </Route>
         <Route path="*">
           <NotFoundPage history={history} />
         </Route>
       </Switch>
       {background && (
-        <Route path="/ingredients/:ingredientId">
+        <Route path="/ingredients/:id">
           <Modal
             header="Детали ингредиента"
             onClose={closeIngredientModalPopup}
@@ -76,8 +87,22 @@ const ModalSwitch: FC = () => {
           <OrderDetails />
         </Modal>
       )}
+      {background && (
+        <Route path="/feed/:id">
+          <Modal header="Заказ" onClose={closeIngredientModalPopup}>
+            <OrderPage />
+          </Modal>
+        </Route>
+      )}
+      {background && (
+        <ProtectedRoute path="/profile/orders/:id">
+          <Modal header="Заказ" onClose={closeIngredientModalPopup}>
+            <OrderPage />
+          </Modal>
+        </ProtectedRoute>
+      )}
     </div>
   );
-}
+};
 
 export default ModalSwitch;

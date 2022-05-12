@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import styles from "./app-header.module.css";
 import {
   Logo,
@@ -11,6 +11,7 @@ import { Link, NavLink, useRouteMatch } from "react-router-dom";
 const AppHeader: FC = () => {
   const homeMatch = useRouteMatch("/");
   const profileMatch = useRouteMatch("/profile");
+  const feedMatch = useRouteMatch("/feed");
 
   return (
     <header>
@@ -24,12 +25,16 @@ const AppHeader: FC = () => {
           <BurgerIcon type={(homeMatch && homeMatch.isExact) ? "primary" : "secondary"} />
           <p className="text text_type_main-default pl-2">Конструктор</p>
         </NavLink>
-        <a className={styles.nav_link + " pr-5 pl-5 pt-4 pb-4"}>
-          <ListIcon type="secondary" />
-          <p className="text text_type_main-default text_color_inactive pl-2">
+        <NavLink
+          to="/feed"
+          className={styles.nav_link + " pr-5 pl-5 pt-4 pb-4"}
+          activeClassName={styles.nav_link_active + " pr-5 pl-5 pt-4 pb-4"}
+          >
+          <ListIcon type={feedMatch ? "primary" : "secondary"} />
+          <p className="text text_type_main-default pl-2">
             Лента заказов
           </p>
-        </a>
+        </NavLink>
       </nav>
       <Link to="/">
         <Logo />

@@ -9,7 +9,7 @@ const modalRoot = document.getElementById("react-modals") as HTMLElement;
 
 const Modal: FC<TModal> = ({ children, header, onClose }) => {
   React.useEffect(() => {
-    const closeModal = (e: { key: string; keyCode: number; }) => {
+    const closeModal = (e: KeyboardEvent) => {
       if (e.key === "Escape" || e.keyCode === 27) {
         onClose();
       }

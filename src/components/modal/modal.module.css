@@ -6,6 +6,8 @@
     left: calc(50% - 360px);
     width: 720px;
     z-index: 100;
+    height: 720px;
+    padding: 40px 20px;
 }
 
 .modal_header {

@@ -1,0 +1,11 @@
+.order_section {
+    width: 600px;
+}
+
+.order_list {
+    height: 60vh;
+    overflow-y: scroll;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

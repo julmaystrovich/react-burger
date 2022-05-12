@@ -1,0 +1,10 @@
+.feed_section {
+    margin: 0 auto;
+    width: 65vw;
+}
+
+.feed_wrapper {
+    display: flex;
+    justify-content: space-around;
+    gap: 60px;
+}

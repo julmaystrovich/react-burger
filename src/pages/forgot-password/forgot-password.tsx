@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 import { Link, useLocation, Redirect, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import {
   EmailInput,
   Button,
@@ -13,7 +13,7 @@ export const ForgotPasswordPage: FC = () => {
   const dispatch = useDispatch();
   const { state } = useLocation<TLocation>();
   const history = useHistory();
-  const { loggedIn } = useSelector((store: any) => store.auth);
+  const { loggedIn } = useSelector((store) => store.auth);
   const [form, setValue] = useState<TForm>({ email: "" });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

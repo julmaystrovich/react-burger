@@ -2,11 +2,11 @@ import React, { useMemo, FC } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "./burger-ingredient";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import { TIngredient } from "../../utils/types";
 
 const BurgerIngredients: FC = () => {
-  const { burgerData } = useSelector((store: any) => store.burgerData);
+  const { burgerData } = useSelector((store) => store.burgerData);
   const [current, setCurrent] = React.useState<string>("buns");
   const bunRef = React.useRef<HTMLDivElement>(null);
   const sauceRef = React.useRef<HTMLDivElement>(null);
@@ -40,17 +40,17 @@ const BurgerIngredients: FC = () => {
   };
 
   const burgerBuns = useMemo(
-    () => burgerData.filter((item: TIngredient) => item.type === "bun"),
+    () => burgerData.filter((item) => item.type === "bun"),
     [burgerData]
   );
 
   const burgerSauce = useMemo(
-    () => burgerData.filter((item: TIngredient) => item.type === "sauce"),
+    () => burgerData.filter((item) => item.type === "sauce"),
     [burgerData]
   );
 
   const burgerMain = useMemo(
-    () => burgerData.filter((item: TIngredient) => item.type === "main"),
+    () => burgerData.filter((item) => item.type === "main"),
     [burgerData]
   );
 
@@ -77,7 +77,7 @@ const BurgerIngredients: FC = () => {
           Булки
         </p>
         <div className={styles.ingrs_list + " pt-6 pr-4 pl-4"}>
-          {burgerBuns.map((item: TIngredient) => {
+          {burgerBuns.map((item) => {
             return <BurgerIngredient key={item._id} item={item} />;
           })}
         </div>
@@ -89,7 +89,7 @@ const BurgerIngredients: FC = () => {
           Соусы
         </p>
         <div className={styles.ingrs_list + " pt-6 pr-4 pl-4"}>
-          {burgerSauce.map((item: TIngredient) => {
+          {burgerSauce.map((item) => {
             return <BurgerIngredient key={item._id} item={item} />;
           })}
         </div>
@@ -101,7 +101,7 @@ const BurgerIngredients: FC = () => {
           Начинки
         </p>
         <div className={styles.ingrs_list + " pt-6 pr-4 pl-4"}>
-          {burgerMain.map((item: TIngredient) => {
+          {burgerMain.map((item) => {
             return <BurgerIngredient key={item._id} item={item} />;
           })}
         </div>

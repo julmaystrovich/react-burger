@@ -9,8 +9,7 @@ export const getBurgerData = () => {
       "Content-Type": "application/json",
     },
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then((res) => checkResponse(res));
 };
 
 export const registerRequest = (
@@ -25,8 +24,7 @@ export const registerRequest = (
     },
     body: JSON.stringify({ email, password, name }),
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then((res) => checkResponse(res));
 };
 
 export const loginRequest = (email: string, password: string) => {
@@ -37,8 +35,7 @@ export const loginRequest = (email: string, password: string) => {
     },
     body: JSON.stringify({ email, password }),
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then((res) => checkResponse(res));
 };
 
 export const logoutRequest = () => {
@@ -49,8 +46,7 @@ export const logoutRequest = () => {
     },
     body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then((res) => checkResponse(res));
 };
 
 export const updateTokenRequest = () => {
@@ -62,8 +58,7 @@ export const updateTokenRequest = () => {
     },
     body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then((res) => checkResponse(res));
 };
 
 export const getUserRequest = () => {
@@ -74,8 +69,7 @@ export const getUserRequest = () => {
       Authorization: `${getCookie("token")}`,
     },
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then((res) => checkResponse(res));
 };
 
 export const forgotPasswordRequest = (email: string) => {
@@ -86,8 +80,7 @@ export const forgotPasswordRequest = (email: string) => {
     },
     body: JSON.stringify({ email }),
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then((res) => checkResponse(res));
 };
 
 export const resetPasswordRequest = (password: string, token: string) => {
@@ -98,8 +91,7 @@ export const resetPasswordRequest = (password: string, token: string) => {
     },
     body: JSON.stringify({ password, token }),
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then((res) => checkResponse(res));
 };
 
 export const updateUserRequest = (email: string, name: string) => {
@@ -111,6 +103,5 @@ export const updateUserRequest = (email: string, name: string) => {
     },
     body: JSON.stringify({ email, name }),
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then((res) => checkResponse(res));
 };
