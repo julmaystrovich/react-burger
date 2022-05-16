@@ -48,6 +48,7 @@ const BurgerIngredient: FC<TIngredientComponent> = ({ item }) => {
         id={item._id}
         onClick={handleClick}
         ref={dragRef}
+        data-test={ingredientId}
       >
         <img
           src={item.image}

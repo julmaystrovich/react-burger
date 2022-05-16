@@ -15,7 +15,7 @@ export type TIngredientsState = {
     currentIngredient: TIngredient | null;
 };
 
-const ingredientsInitialState: TIngredientsState = {
+export const ingredientsInitialState: TIngredientsState = {
     burgerData: [],
     ingredientsRequest: false,
     ingredientsFailed: false,

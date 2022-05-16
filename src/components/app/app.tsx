@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { BrowserRouter as Router} from 'react-router-dom';
 import { useDispatch } from '../../services/hooks';
 import { getUser } from '../../services/actions/authorization';
