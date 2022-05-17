@@ -46,7 +46,8 @@ describe("Проверка Order Reducer", () => {
     })).toEqual({
         ...orderInitialState,
         orderNumber,
-        orderRequest: false
+        orderNumberFailed: false,
+        orderNumberRequest: false
     });
 });
   it("Проверка GET_ORDER_NUMBER_FAILED", () => {

@@ -83,12 +83,11 @@ describe('Проверка Authorization Reducer', () => {
             ...authInitialState,
             user
         }, {
-            type: LOGOUT_SUCCESS
+            type: LOGOUT_SUCCESS,
         })).toEqual({
             ...authInitialState,
-            logoutRequest: false,
             loggedIn: false,
-            user: { name: "", email: "" }
+            user: null,
         });
     });
     it('Проверка LOGOUT_FAILED', () => {

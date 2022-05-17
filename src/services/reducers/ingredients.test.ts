@@ -10,7 +10,7 @@ import {
 } from "../actions/ingredients";
 
 describe("Проверка Ingredients Reducer", () => {
-  const ingredient = {
+  const ingredients = [{
     _id: "60d3b41abdacab0026a733c9",
     name: "Мясо бессмертных моллюсков Protostomia",
     type: "main",
@@ -22,9 +22,22 @@ describe("Проверка Ingredients Reducer", () => {
     image: "https://code.s3.yandex.net/react/code/meat-02.png",
     image_mobile: "https://code.s3.yandex.net/react/code/meat-02-mobile.png",
     image_large: "https://code.s3.yandex.net/react/code/meat-02-large.png",
-    __v: 0,
-  };
-  const ingredients = [ingredient];
+    __v: 0
+    },
+    {
+    _id: "60d3b41abdacab0026a733c7",
+    name: "Флюоресцентная булка R2-D3",
+    type: "bun",
+    proteins: 44,
+    fat: 26,
+    carbohydrates: 85,
+    calories: 643,
+    price: 988,
+    image: "https://code.s3.yandex.net/react/code/bun-01.png",
+    image_mobile: "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
+    image_large: "https://code.s3.yandex.net/react/code/bun-01-large.png",
+    __v: 0
+    }];
 
   it("Проверка Initial State", () => {
     expect(ingredientsReducer(undefined, {} as AnyAction)).toEqual(
@@ -45,14 +58,13 @@ describe("Проверка Ingredients Reducer", () => {
   });
   it("Проверка GET_BURGER_INGREDIENTS_SUCCESS", () => {
     expect(ingredientsReducer(ingredientsInitialState, {
-        type: GET_BURGER_INGREDIENTS_SUCCESS,
-        ingredients
-    })).toEqual({
+      type: GET_BURGER_INGREDIENTS_SUCCESS,
+      ingredients
+  })).toEqual({
       ...ingredientsInitialState,
-      ingredients: [ingredient],
-      ingredientsRequest: false,
-      ingredientsFailed: false,
-    });
+      burgerData: ingredients,
+      ingredientsRequest: false
+  });
   });
   it("Проверка GET_BURGER_INGREDIENTS_FAILED", () => {
     expect(
@@ -69,10 +81,10 @@ describe("Проверка Ingredients Reducer", () => {
   it('Проверка OPEN_INGREDIENTS_DETAILS', () => {
     expect(ingredientsReducer(ingredientsInitialState, {
         type: OPEN_INGREDIENTS_DETAILS,
-        currentIngredient: ingredient,
+        currentIngredient: ingredients[0],
     })).toEqual({
         ...ingredientsInitialState,
-        currentIngredient: ingredient
+        currentIngredient: ingredients[0]
     });
 });
 
