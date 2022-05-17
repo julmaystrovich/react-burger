@@ -41,6 +41,9 @@ const ModalSwitch: FC = () => {
         <Route path="/" exact={true}>
           <MainPage />
         </Route>
+        <Route path="/react-burger" exact={true}>
+          <MainPage />
+        </Route>
         <ProtectedRoute path="/profile/orders/:id">
           <OrderPage />
         </ProtectedRoute>

@@ -49,7 +49,7 @@ export type TAuthState = {
     forgotPasswordFailed: boolean,
 };
     
-const authInitialState: TAuthState = {
+export const authInitialState: TAuthState = {
     user: null,
     loggedIn: false,
     loginRequest: false,

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { TBurgerConstructorComponent, TIngredient } from "../../utils/types";
+import { TBurgerConstructorComponent } from "../../utils/types";
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
@@ -67,7 +67,11 @@ const BurgerConstructorItem: FC<TBurgerConstructorComponent> = ({ burgerItem, on
         text={burgerItem.name}
         price={burgerItem.price}
         thumbnail={burgerItem.image_mobile}
-        handleClose={() => onDelete(burgerItem.uuid)}
+        handleClose={() => {
+          if (burgerItem.uuid !== undefined) {
+              onDelete(burgerItem.uuid) 
+          }
+      }}
       />
     </div>
   );

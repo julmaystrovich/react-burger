@@ -31,7 +31,7 @@ export const LoginPage: FC = () => {
   return (
     <main className={styles.page}>
       <p className="text text_type_main-medium pb-6">Вход</p>
-      <form onSubmit={handleSubmit} className={styles.container}>
+      <form onSubmit={handleSubmit} className={styles.container} data-test="input-container">
         <EmailInput
           onChange={handleChange}
           value={`${form.email}`}

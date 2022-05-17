@@ -51,7 +51,8 @@ const BurgerConstructor: FC = () => {
 
   const handleDrop = (item: TIngredient) => {
     const uuid = uuidv4();
-    if (item.type === "bun" && burgerBuns) {
+    console.log(uuid);
+    if (item.type === "bun" && burgerBuns?.uuid !== undefined) {
       dispatch(removeIngredient(burgerBuns.uuid));
     }
     dispatch(addIngredient(item, uuid));
@@ -76,7 +77,7 @@ const BurgerConstructor: FC = () => {
 
   return (
     <section className={styles.constr_section + " ml-10 pt-25"}>
-      <div className={styles.constr_inside + " pr-4 pl-4"} ref={dropTarget}>
+      <div className={styles.constr_inside + " pr-4 pl-4"} ref={dropTarget} data-test="constructor">
         {burgerBuns && (
           <ConstructorElement
             type="top"

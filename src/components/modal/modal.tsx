@@ -22,8 +22,8 @@ const Modal: FC<TModal> = ({ children, header, onClose }) => {
 
   return ReactDOM.createPortal(
     <>
-      <div className={styles.modal}>
-        <div className={styles.modal_header + " pt-10 pr-10 pl-10"}>
+      <div className={styles.modal} data-test="modal">
+        <div className={styles.modal_header + " pt-10 pr-10 pl-10"} data-test="modal-header">
           <p className="text text_type_main-large">
             {header}
           </p>
